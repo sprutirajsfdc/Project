@@ -1,0 +1,587 @@
+/* ====== Card Container ====== */
+
+.image-section {
+  width: 100%;
+  max-width: 100%;
+  height: 300px;
+  background-image: url('/resource/real_estate');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.inventory-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 90%;
+  width: fit-content;
+  color: white;
+  padding: 0 16px;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.subtitle {
+  font-size: 1rem;
+  margin-top: 8px;
+  display: inline-block;
+}
+
+.button-section {
+  margin: 20px 0;
+}
+
+.action-button {
+  background-color: #002349;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  font-size: 1rem;
+  border-radius: 1px;
+  cursor: pointer;
+}
+
+/* ====== Card Container ====== */
+.slds-card {
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  padding: 20px;
+}
+
+.slds-card:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* ====== Filter Section on Top ====== */
+.filter-section-top {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 20px 25px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  align-items: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+/* Each input fills space but with min width */
+.filter-section-top lightning-combobox,
+.filter-section-top lightning-input {
+  flex: 1 1 220px;
+  min-width: 200px;
+}
+
+/* Reset button container aligns right */
+.reset-button-container {
+  flex: 0 0 auto;
+}
+
+/* ====== Buttons (Pagination, Reset, etc) ====== */
+.slds-button {
+  background-color: #003366;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.65rem 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(0, 74, 173, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+}
+
+.slds-button:hover {
+  background-color: #0066ff;
+  box-shadow: 0 5px 18px rgba(0, 102, 255, 0.6);
+}
+
+.slds-button:disabled {
+  background-color: #a0a8b9;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ====== Modal Styles ====== */
+.slds-modal__container {
+  /* background: #fff; */
+  border-radius: 18px;
+  /* max-width: 900px; */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  padding: 1.8rem 2.5rem;
+  overflow: hidden;
+  transition: transform 0.4s ease;
+}
+
+.slds-modal__header {
+  /* background-color: #003366; */
+  color: rgb(47, 41, 41);
+  font-weight: 100px;
+  font-size: 1.4rem;
+  padding: 1.3rem 2.5rem;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  box-shadow: 0 3px 10px rgba(0, 102, 255, 0.4);
+}
+
+.slds-button_icon.slds-modal__close {
+  color: #fff;
+  font-size: 1.6rem;
+  transition: color 0.3s ease;
+}
+
+.slds-button_icon.slds-modal__close:hover {
+  color: #cce4ff;
+}
+
+/* ====== Table Styles ====== */
+.slds-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  /* Spaced rows */
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.slds-table_bordered th,
+.slds-table_bordered td {
+  padding: 14px 18px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  vertical-align: middle;
+  border: none;
+  /* Remove border, using shadows */
+}
+
+.slds-table th {
+  font-weight: 700;
+  color: #004aad;
+  background-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-bottom: 12px;
+  box-shadow: none;
+}
+
+/* ====== Filter Panel & Table Panel ====== */
+.filter-panel,
+.table-panel {
+  background: #f7faff;
+  padding: 20px 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 75, 173, 0.07);
+  margin-bottom: 30px;
+}
+
+/* ====== Status Badges ====== */
+
+.status-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-badge {
+  background-color: white;
+  padding: 2rem 1.5rem;
+  /*border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);*/
+  text-align: center;
+  /*border: 1px solid #e0e0e0;*/
+  transition: background-color 0.3s ease;
+  /*border-left: 6px solid #003366;*/
+  cursor: default;
+}
+
+.status-badge:hover {
+  background-color: #003366;
+  border-left-color: #99bbff;
+}
+
+.status-badge:hover .status-label,
+.status-badge:hover .status-count {
+  color: white;
+}
+
+.status-badge:hover .status-price {
+  color: #C29B40;
+}
+
+.status-label {
+  font-size: 1.2rem;
+  color: #002349;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.status-count {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #002349;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.status-price {
+  font-size: 0.75rem;
+  color: #666666;
+  font-weight: 400;
+}
+
+/* ====== Typography & Header ====== */
+.masin {
+  background-color: #003366;
+  color: white;
+  font-size: 18px;
+  /* Reduced from 24px */
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 800;
+  text-align: center;
+  padding: 0.5rem 0;
+  /* Reduced from 1rem */
+  border-radius: 8px 8px 0 0;
+  user-select: none;
+  letter-spacing: 0.04em;
+  box-shadow: inset 0 -3px 8px rgba(0, 58, 112, 0.4);
+}
+
+/* ====== Responsive ====== */
+/* For Tablet and above view*/
+@media (min-width: 769px){
+  
+  .filter-section-top lightning-combobox,
+  .filter-section-top lightning-input,
+  .reset-button-container {
+    flex: 1 1 100%;
+    min-width: auto;
+  }
+
+  .top-button-mobile {
+    display: none;
+  }
+  /*.top-button-desktop {
+    display: block;
+  }*/
+  
+  .desktop-table {
+    display: block;
+  }
+  
+  .mobile-table {
+    display: none;
+  }
+}
+
+/* For Mobile view*/
+@media (max-width: 768px) {
+  .filter-section-top {
+    display: none;
+  }
+  .mandotory-filter-warning {
+    display: none;
+  }
+  .top-button-mobile {
+    display: block;
+  }
+  .desktop-table {
+    display: none;
+  }
+  .mobile-table {
+    display: block;
+  }
+}
+
+@media (max-width: 400px) {
+
+  .slds-button {
+    width: 100%;
+    margin-bottom: 0.9rem;
+  }
+
+  .status-badges {
+    flex-direction: column;
+  }
+
+  .status-badge {
+    max-width: 48%;
+    padding: 1.5rem 1rem;
+    flex: 0 0 48%;
+    margin-bottom: 0.9rem;
+  }
+
+  .status-badge:last-child {
+    max-width: 48%;
+  }
+
+  .image-section {
+    height: 250px;
+  }
+
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+
+  .action-button {
+    font-size: 1rem;
+  }
+
+  /*Mobile filter panel start 1*/
+  .slds-card {
+    margin: 0.5rem;
+    max-width: none;
+  }
+
+  .slds-card__body {
+    padding: 1rem;
+  }
+
+  /*Mobile filter panel end*/
+}
+
+.custom-blue-text{
+  color:blue;
+}
+
+.slds-modal {
+  display: block !important;
+}
+
+.slds-backdrop_open {
+  display: block !important;
+}
+
+/*Mobile filter panel start 2*/
+.slide-up-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  padding: 1rem;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease-out forwards;
+  z-index: 1001;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.overlayPanel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.mobileOverlayPanel {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.custom-combobox {
+  --slds-c-combobox-color-border: #d8dde6;
+}
+
+.button-full-width {
+  width: 30%;
+}
+
+.slds-card {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.slds-card__header-title {
+  font-weight: 600;
+  color: #181818;
+  justify-content: center;
+}
+
+.slds-border_bottom {
+  border-bottom: 1px solid #e5e5e5;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Reset Button Styling */
+
+.reset-button {
+  background-color: white;
+  color: #002349;
+  padding: 5px 25px;
+  font-size: 1rem;
+  border-radius: 1px;
+  border-color: #c2cad3;
+  cursor: pointer;
+}
+
+.reset-button:hover {
+    background-color: #f3f3f3;
+    border-color: #c9ccd4;
+}
+
+.filter-button {
+  background-color: #002349;
+  color: white;
+  padding: 5px 25px;
+  font-size: 1rem;
+  border-radius: 1px;
+  cursor: pointer;
+}
+
+/*Mobile filter panel End*/
+
+/*Mobile Unit detail page start*/
+
+.unit-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 998;
+}
+
+.unit-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*overflow: hidden;*/
+}
+
+.unit-card {
+    /*background-color: #4d1d0e;*/
+    color: white;
+    width: 90%;
+    max-width: 400px;
+    padding: 1rem;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    position: relative;
+    overflow-y: auto;
+    max-height: 90vh;
+    z-index: 1000;
+}
+
+/*Mobile Unit detail page end*/
+
+
+.unit-card {
+    --slds-c-card-color-background: white;
+}
+
+.unit-header {
+    background: white; /* Salesforce blue */
+    color: #003366;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0.25rem 0.25rem 0 0;
+}
+
+.detail-item {
+    border-bottom: 1px solid #f3f3f3;
+}
+
+.close-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+}
+
+.unit-value{
+  color: #003366;
+}
+
+/* Make modal wider and center content nicely */
+.slds-modal__container {
+    max-width: 700px;
+}
+
+/* Add some vertical spacing between rows */
+.slds-grid > .slds-col {
+    margin-bottom: 1rem;
+}
+
+/* Make the lightning-input-field take full width inside each column */
+.slds-grid lightning-input-field {
+    width: 100%;
+}
+
+/* Footer button spacing */
+.slds-modal__footer {
+    padding-top: 1rem;
+}
+
+/* Align footer buttons to right with some gap */
+.slds-modal__footer > lightning-button {
+    margin-left: 0.5rem;
+}
+.slds-modal__container {
+    max-width: 60rem;
+    width: 100%;
+}
+.slds-modal__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+.lightning-layout-item {
+    border-radius: 4px;
+    background-color: #fafafa;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
