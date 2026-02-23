@@ -1,0 +1,111 @@
+<template>
+    <div class="slds-p-around_medium container">
+        <div class="slds-card slds-p-around_medium slds-m-bottom_medium">
+            <div class="slds-grid slds-grid_vertical-align-center slds-m-bottom_small">
+                <span class="filter-title">Filter Listings</span>
+                <div class="slds-col_bump-left">
+                    <button class="slds-button slds-text-color_error" onclick={handleClearAll}>Clear all filters</button>
+                </div>
+            </div>
+            <div class="slds-grid slds-gutters slds-grid_vertical-align-end">
+                <div class="slds-col slds-size_1-of-6">
+                    <lightning-input label="LISTING NAME" placeholder="Search name..." value={listingName} onchange={handleFilterChange} data-name="name"></lightning-input>
+                </div>
+                 <div class="slds-col slds-size_1-of-6">
+                    <lightning-input  label="BROKER REF" value={brokerRef} onchange={handleFilterChange} data-name="brokerRef"></lightning-input>
+                </div>
+                <div class="slds-col slds-size_1-of-6">
+                    <lightning-combobox  label="PROPERTY TYPE" value={propType}  options={typeOptions} onchange={handleFilterChange}  data-name="type"></lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-6">
+                    <lightning-combobox label="STATUS" value={status} options={statusOptions} onchange={handleFilterChange} data-name="status"></lightning-combobox>
+                </div>
+                <!-- <div class="slds-col slds-size_1-of-6">
+                    <div class="slds-grid slds-gutters_xx-small">
+                        <div class="slds-col"><lightning-input label="SIZE (SQFT)" placeholder="Min"></lightning-input></div>
+                        <div class="slds-col"><lightning-input label=" " placeholder="Max"></lightning-input></div>
+                    </div>
+                </div> -->
+                <div class="slds-col slds-size_1-of-6">
+                    <lightning-combobox label="LISTING TYPE"  value={listingType} options={recordTypeOptions} data-name="listingType"  onchange={handleFilterChange}></lightning-combobox>
+                </div>
+                <div class="slds-col slds-size_1-of-6">
+                    <button class="search-btn slds-button slds-button_brand slds-full-width">
+                        <lightning-icon icon-name="utility:search" size="x-small" variant="inverse" class="slds-m-right_x-small"></lightning-icon>
+                        Search
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-grid slds-gutters">
+            <div class={tableWidthClass}>
+                <div class="slds-card table-card">
+                    <table class="slds-table slds-no-row-hover custom-table">
+                        <thead>
+                            <tr>
+                                <th>PROPERTY</th>
+                                <th>TITLE & OWNER</th>
+                                <th>DETAILS</th>
+                                <th>PRICE</th>
+                                <th>STATUS</th>
+                                <th class="slds-text-align_right">ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={processedListings} for:item="listing">
+                                <tr key={listing.Id} class="table-row">
+                                    <td><img src={listing.Thumbnail} class="row-thumb"></td>
+                                    <td>
+                                        <div class="listing-name">{listing.Name}</div>
+                                        <div class="slds-text-color_weak slds-text-body_small">Ref: {listing.Auto_Generated_broker_reference_ID__c}</div>
+                                        <div class="owner-text"><lightning-icon icon-name="utility:user" size="xx-small"></lightning-icon> {listing.OwnerName}</div>
+                                    </td>
+                                    <td>
+                                        <div class="details-row">
+                                            <span class="detail-item">
+                                                <lightning-icon icon-name="utility:room" size="xx-small" title="Bedrooms" class="custom-icon"></lightning-icon>
+                                                <span class="detail-text">{listing.Bedrooms__c}</span>
+                                            </span>
+                                            
+                                            <span class="detail-item">
+                                                <lightning-icon icon-name="utility:water" size="xx-small" title="Bathrooms" class="custom-icon"></lightning-icon>
+                                                <span class="detail-text">{listing.Bathrooms__c}</span>
+                                            </span>
+                                            
+                                            <span class="detail-item">
+                                                <lightning-icon icon-name="utility:retail_execution" size="xx-small" title="Size" class="custom-icon"></lightning-icon>
+                                                <span class="detail-text">{listing.os_TotalArea_pb__c} sqft</span>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="price-cell">{listing.FormattedPrice}</td>
+                                    <td><span class={listing.StatusBadgeClass}>{listing.Status__c}</span></td>
+                                    <td class="slds-text-align_right">
+                                        <lightning-button-icon icon-name="utility:apps" variant="border-filled" data-id={listing.Id} onclick={handleOpenSidebar}></lightning-button-icon>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                    <div class="slds-p-around_small slds-grid slds-grid_align-spread footer">
+                        <span class="slds-text-color_weak">Showing 1-3 of 42 properties</span>
+                        <div>
+                            <lightning-button label="Previous" class="slds-m-right_x-small"></lightning-button>
+                            <lightning-button label="Next" variant="brand" class="orange-nav"></lightning-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <template if:true={isSidebarOpen}>
+                <div class="slds-col slds-size_1-of-3 animate-slide">
+                    <c-listing-detail-sidebar 
+                        listing-details={selectedListing} 
+                        onclose={handleCloseSidebar}>
+                    </c-listing-detail-sidebar>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>
