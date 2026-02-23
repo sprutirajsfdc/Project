@@ -54,7 +54,7 @@
                         </thead>
                         <tbody>
                             <template for:each={processedListings} for:item="listing">
-                                <tr key={listing.Id} class="table-row">
+                                <tr key={listing.Id} class={listing.RowClass}>
                                     <td><img src={listing.Thumbnail} class="row-thumb"></td>
                                     <td>
                                         <div class="listing-name">{listing.Name}</div>
