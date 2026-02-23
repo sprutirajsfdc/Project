@@ -162,4 +162,20 @@ wiredData({ error, data }) {
             attributes: { recordId: recordId, actionName: 'view' }
         });
     }
+    get formattedTotalFilteredPrice() {
+    const total = this.totalFilteredPrice;
+    return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+    }).format(total);
+}
+get totalFilteredPrice() {
+    if (!this.processedListings || this.processedListings.length === 0) {
+        return 0;
+    }
+
+    return this.processedListings.reduce((total, listing) => {
+        return total + (listing.os_ListingPrice_pb__c || 0);
+    }, 0);
+}
 }
