@@ -278,3 +278,18 @@
     align-items: center;
     margin-top: 2px;
 }
+.selected-row {
+    background-color: #efaa95 !important; /* Light orange tint */
+    border-left: 4px solid var(--brand-orange) !important;
+}
+
+/* Ensure the table doesn't shift when the 4px border is added */
+.table-row {
+    border-left: 4px solid transparent;
+}
+
+/* Hover effect for better UX */
+.table-row:hover {
+    background-color: #fbfcfe;
+    cursor: pointer;
+}
