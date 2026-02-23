@@ -1,0 +1,280 @@
+:host {
+    --brand-orange: #f15a24;
+}
+
+.filter-title { font-weight: bold; font-size: 1.1rem; color: #333; }
+.search-btn { background-color: var(--brand-orange); border: none; height: 40px; }
+.orange-btn { background-color: var(--brand-orange) !important; border: none; height: 45px; border-radius: 8px; }
+.orange-nav { --slds-c-button-brand-color-background: var(--brand-orange); }
+
+.row-thumb { width: 60px; height: 60px; border-radius: 10px; object-fit: cover; }
+.listing-name { font-weight: bold; font-size: 0.95rem; color: #2c3e50; }
+.owner-text { font-size: 0.8rem; color: #7f8c8d; }
+.price-cell { color: var(--brand-orange); font-weight: bold; font-size: 1.1rem; }
+
+/* Status Badges */
+.badge { padding: 4px 12px; border-radius: 12px; font-size: 10px; font-weight: bold; text-transform: uppercase; }
+.active { background: #e6f7ef; color: #2ecc71; }
+.pending { background: #fff4e6; color: #f39c12; }
+.sold { background: #f2f2f2; color: #95a5a6; }
+
+/* Sidebar */
+.hero-image-container { position: relative; border-radius: 12px; overflow: hidden; height: 200px; }
+.sidebar-img { width: 100%; height: 100%; object-fit: cover; }
+.photo-count { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+.stat-box { background: #f8f9fb; border-radius: 10px; padding: 12px; text-align: center; }
+.stat-box p { font-size: 10px; color: #8898aa; margin: 0; }
+
+.animate-slide { animation: slideIn 0.3s ease-out; }
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+:host {
+    --brand-orange: #f15a24;
+    --light-bg: #f8f9fb;
+    --border-color: #edf2f7;
+}
+
+/* --- Container & Layout --- */
+.container {
+    background-color: #f4f7f9;
+    min-height: 100vh;
+}
+
+/* --- Filter Section --- */
+.filter-card {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.filter-title { 
+    font-weight: 700; 
+    font-size: 1.1rem; 
+    color: #2c3e50; 
+}
+
+.search-btn { 
+    background-color: var(--brand-orange) !important; 
+    border: none !important; 
+    height: 40px; 
+    border-radius: 8px !important;
+    font-weight: 600;
+}
+
+/* --- Table Styles --- */
+.table-card {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.custom-table thead th {
+    background-color: #fbfcfe;
+    color: #8898aa;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    padding: 15px;
+}
+
+.table-row td {
+    padding: 12px 15px;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.row-thumb { 
+    width: 64px; 
+    height: 64px; 
+    border-radius: 12px; 
+    object-fit: cover; 
+    background: #e2e8f0;
+}
+
+.listing-name { 
+    font-weight: 700; 
+    font-size: 1rem; 
+    color: #2c3e50; 
+}
+
+.price-cell { 
+    color: var(--brand-orange); 
+    font-weight: 800; 
+    font-size: 1.15rem; 
+}
+
+/* --- Status Badges --- */
+.badge { 
+    padding: 4px 12px; 
+    border-radius: 20px; 
+    font-size: 10px; 
+    font-weight: 800; 
+    display: inline-block;
+}
+.active { background: #e6f7ef; color: #2ecc71; }
+.pending { background: #fff4e6; color: #f39c12; }
+.sold { background: #f2f2f2; color: #95a5a6; }
+
+/* --- Sidebar & Slider --- */
+.hero-image-container { 
+    position: relative; 
+    border-radius: 12px; 
+    overflow: hidden; 
+    height: 220px; 
+    background: #000;
+    cursor: zoom-in;
+}
+
+.sidebar-img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    transition: transform 0.3s ease;
+}
+
+.photo-count { 
+    position: absolute; 
+    bottom: 12px; 
+    right: 12px; 
+    background: rgba(0,0,0,0.6); 
+    color: white; 
+    padding: 3px 10px; 
+    border-radius: 6px; 
+    font-size: 11px; 
+}
+
+/* Slider Arrows */
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.slider-arrow:hover { background: white; }
+.left-arrow { left: 10px; }
+.right-arrow { right: 10px; }
+
+/* Sidebar Stats */
+.stat-box { 
+    background: var(--light-bg); 
+    border-radius: 12px; 
+    padding: 15px 5px; 
+    text-align: center; 
+    border: 1px solid var(--border-color);
+}
+.stat-box p { font-size: 10px; color: #8898aa; margin: 0; text-transform: uppercase; font-weight: 600; }
+.stat-box strong { font-size: 1.1rem; color: #2c3e50; display: block; margin-top: 4px; }
+
+.property-title-sidebar {
+    color: var(--brand-orange);
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+/* --- Action Buttons --- */
+.orange-btn { 
+    background-color: var(--brand-orange) !important; 
+    color: white !important;
+    border: none !important; 
+    height: 48px; 
+    border-radius: 10px !important; 
+    font-weight: 700;
+    width: 100%;
+}
+
+.view-salesforce-btn {
+    background-color: #f0f4f8 !important;
+    color: #2c3e50 !important;
+    border: none !important;
+    height: 48px;
+    border-radius: 10px !important;
+    font-weight: 700;
+    width: 100%;
+}
+
+/* --- Animations --- */
+.animate-slide { 
+    animation: slideIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
+}
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.badge-sold {
+    background-color: #ffdce0; /* Light Red */
+    color: #e6122d; /* Dark Red */
+}
+
+.badge-published {
+    background-color: #d1fae5; /* Light Green */
+    color: #065f46; /* Dark Green */
+}
+
+.badge-pending {
+    background-color: #fef3c7; /* Light Amber */
+    color: #92400e; /* Dark Amber */
+}
+
+.badge-draft {
+    background-color: #f3f4f6; /* Light Grey */
+    color: #374151; /* Dark Grey */
+}
+.details-row {
+    display: flex;
+    align-items: center;
+    color: #4a5568; /* Dark grey text */
+    font-size: 0.85rem;
+}
+
+/* Individual item spacing */
+.detail-item {
+    display: flex;
+    align-items: center;
+    margin-right: 12px;
+    font-weight: 500;
+}
+
+/* Icon Styling - making them slightly grey to match the UI */
+.detail-icon {
+    --slds-c-icon-color-foreground: #a0aec0;
+}
+
+/* Ensure the table cell doesn't wrap awkwardly */
+.custom-table td {
+    vertical-align: middle;
+    padding: 12px 8px;
+}
+
+/* Make the property name stand out as per listingone.png */
+.listing-name {
+    font-weight: 700;
+    color: #2d3748;
+    font-size: 0.95rem;
+}
+
+.owner-text {
+    font-size: 0.8rem;
+    color: #718096;
+    display: flex;
+    align-items: center;
+    margin-top: 2px;
+}
