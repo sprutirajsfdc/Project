@@ -9,7 +9,7 @@ export default class ListingExplorer extends NavigationMixin(LightningElement) {
     @track thumbnailMap = {}; 
     @track selectedListing = null;
     @track isSidebarOpen = false;
-    
+    @track selectedListingId = '';
     // Track filter options
     @track statusOptions = [];
     @track typeOptions = [];
@@ -127,6 +127,7 @@ wiredData({ error, data }) {
             else if (statusVal === 'draft') statusClass += 'badge-draft';
             else if (statusVal === 'pending') statusClass += 'badge-pending';
             else statusClass += 'badge-default';
+            const isSelected = item.Id === this.selectedListingId;
 
             return {
                 ...item,
@@ -135,7 +136,8 @@ wiredData({ error, data }) {
                     style: 'currency', currency: 'USD', maximumFractionDigits: 0 
                 }).format(item.os_ListingPrice_pb__c || 0),
                 Thumbnail: imageUrl,
-                StatusBadgeClass: statusClass
+                StatusBadgeClass: statusClass,
+                RowClass: isSelected ? 'table-row selected-row' : 'table-row'
             };
         });
     }
@@ -146,6 +148,7 @@ wiredData({ error, data }) {
 
     handleOpenSidebar(event) {
         const id = event.target.dataset.id;
+        this.selectedListingId = id;
         this.selectedListing = this.processedListings.find(l => l.Id === id);
         this.isSidebarOpen = true;
     }
@@ -153,6 +156,8 @@ wiredData({ error, data }) {
     handleCloseSidebar() {
         this.isSidebarOpen = false;
         this.selectedListing = null;
+        this.selectedListingId =  null;
+        
     }
 
     navigateToRecordView(event) {
