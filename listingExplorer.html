@@ -95,6 +95,13 @@
                             <lightning-button label="Next" variant="brand" class="orange-nav"></lightning-button>
                         </div>
                     </div>
+                    <template if:true={status}>
+                <div class="slds-p-around_medium slds-text-align_right total-section">
+                    <strong>
+                        Total {status} Listing Price = {formattedTotalFilteredPrice}
+                    </strong>
+                </div>
+            </template>
                 </div>
             </div>
 
