@@ -1,0 +1,66 @@
+<template>
+    <div class="sidebar-card slds-card slds-p-around_medium">
+        <div class="slds-grid slds-grid_align-spread slds-m-bottom_small">
+            <h2 class="sidebar-header">Property Details</h2>
+            <lightning-button-icon icon-name="utility:close" variant="bare" onclick={closeSidebar} size="small"></lightning-button-icon>
+        </div>
+
+        <div class="hero-image-container">
+            <img src={currentImageUrl} class="sidebar-img" onclick={openFullscreen}>
+            
+            <template if:true={hasImages}>
+                <button class="nav-arrow left" onclick={prevImage}>&#10094;</button>
+                <button class="nav-arrow right" onclick={nextImage}>&#10095;</button>
+                
+                <div class="photo-counter">
+                    <lightning-icon icon-name="utility:photo" size="xx-small" variant="inverse" class="slds-m-right_xx-small"></lightning-icon>
+                    {currentImageIndexDisplay} / {totalImages}
+                </div>
+            </template>
+        </div>
+ 
+        <div class="slds-m-top_medium">
+            <h1 class="property-title-text">{listingDetails.gsir_property_finder_title__c}</h1>
+            
+            <div class="location-container">
+                <lightning-icon icon-name="utility:checkin" size="xx-small" class="location-icon"></lightning-icon>
+                <span class="location-text">{listingDetails.Address__c}</span>
+            </div>
+        </div>
+
+        <div class="slds-grid slds-gutters_small slds-m-vertical_medium">
+            <div class="slds-col">
+                <div class="stat-box">
+                    <p>BEDS</p>
+                    <strong>{listingDetails.Bedrooms__c}</strong>
+                </div>
+            </div>
+            <div class="slds-col">
+                <div class="stat-box">
+                    <p>BATHS</p>
+                    <strong>{listingDetails.Bathrooms__c}</strong>
+                </div>
+            </div>
+            <div class="slds-col">
+                <div class="stat-box">
+                    <p>AREA</p>
+                    <strong>{listingDetails.os_TotalArea_pb__c}</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-m-bottom_medium">
+            <h3 class="section-label">DESCRIPTION</h3>
+            <p class="description-text">{listingDetails.Description__c}</p>
+        </div>
+
+        <!-- <button class="slds-button slds-button_brand orange-btn slds-full-width slds-m-bottom_small">
+            <lightning-icon icon-name="utility:edit" size="x-small" variant="inverse" class="slds-m-right_x-small"></lightning-icon>
+            Edit Listing
+        </button> -->
+        <button class="slds-button slds-button_neutral view-salesforce-btn slds-full-width" onclick={navigateToRecord}>
+            <lightning-icon icon-name="utility:new_window" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+            View in Salesforce
+        </button>
+    </div>
+</template>
