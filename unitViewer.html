@@ -1,0 +1,671 @@
+<template>
+
+    <div class="inventory-container">
+        <div class="image-section">
+            <div class="overlay">
+                <h1 class="title">Inventory Management</h1>
+                <p class="subtitle">
+                    Track available and booked units across all projects with powerful filters and organized tables
+                </p>
+            </div>
+        </div>
+        <div class="button-section top-button-mobile">
+            <button class="action-button" onclick={togglePanel}>Search for Units</button>
+        </div>
+    </div>
+
+<lightning-card hide-header="true" label="InvetoryCard">
+    <!-- Status Summary -->
+    <template if:true={statusCounts}>
+        <div class="status-badges">
+            <template for:each={statusCounts} for:item="status">
+                <div key={status.label} class="status-badge">
+                    <div class="status-label">{status.label}</div>
+                    <div class="status-count">{status.count}</div>
+                    <template if:true={status.showPrice}>
+                        <div class="status-price">{status.formattedSoldPrice}</div>
+                    </template>
+                </div>
+            </template>
+
+            <!-- Total Units Badge -->
+            <div class="status-badge total-badge">
+                <div class="status-label">Total Units</div>
+                <div class="status-count">{totalUnits}</div>
+                <div class="status-price">{formattedTotalSalesPrice}</div>
+            </div>
+        </div>
+    </template>
+</lightning-card>
+
+
+        <!-- Filter panel for mobile -->
+        <template if:true={showPanel}>
+            <div class="overlayPanel" onclick={closePanel}></div>
+            <div class="slide-up-panel">
+                <div class="slds-card slds-m-around_medium">
+                    <div class="slds-card__header slds-text-align_center">
+                        <h2 class="slds-card__header-title slds-text-heading_medium">
+                            Search for Units
+                        </h2>
+                        <div class="slds-border_bottom slds-m-top_small"></div>
+                    </div>
+                    <p class="custom-blue-text slds-text-body_small">
+                        * Please select either Project or Developer to filter results.
+                    </p>
+
+                    <div class="slds-card__body slds-card__body_inner slds-p-around_medium">
+                        <div class="slds-form-element slds-m-bottom_medium">
+                            <lightning-combobox name="project" label="Project" value={selectedProject}
+                                placeholder="Select an Option" options={projectOptions} onchange={handleProjectChange}
+                                variant="label-stacked" class="custom-combobox">
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-form-element slds-m-bottom_medium">
+                            <lightning-combobox name="developer" label="Developer" value={selectedDeveloper}
+                                placeholder="Select an Option" options={developerOptions}
+                                onchange={handleDeveloperChange} variant="label-stacked" class="custom-combobox">
+                            </lightning-combobox>
+                        </div>
+
+                        <div class="slds-form-element slds-m-bottom_medium">
+                            <lightning-combobox name="location" label="Location" value={selectedLocation}
+                                placeholder="Select an Option" options={locationOptions} onchange={handleLocationChange}
+                                variant="label-stacked" class="custom-combobox">
+                            </lightning-combobox>
+                        </div>
+
+                        <div class="slds-form-element slds-m-bottom_medium">
+                            <lightning-input name="Unit Number" label="Unit Number" value={unit_Number_Input}
+                                placeholder="Enter Unit no." onchange={handleUnitnoChange} variant="label-stacked">
+                            </lightning-input>
+                        </div>
+
+                        <div class="slds-grid slds-gutters slds-m-bottom_medium">
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input type="text" name="tower" label="Tower" value={unit_Tower_Input}
+                                    placeholder="Enter Value" onchange={handletoweroChange} variant="label-stacked">
+                                </lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input type="text" name="bedroom" label="Bedroom" value={unit_Bedroom_Input}
+                                    placeholder="Enter value" onchange={handleBedroomChange} variant="label-stacked">
+                                </lightning-input>
+                            </div>
+                        </div>
+
+                        <div class="slds-form-element slds-m-bottom_medium">
+                            <lightning-combobox name="status" label="Status" value={unit_Status_Input}
+                                placeholder="Select an Option" options={statusOptions} onchange={handleStatusSearch}
+                                variant="label-stacked" class="custom-combobox" field-level-help="Filter by Status">
+                            </lightning-combobox>
+                        </div>
+
+                        <div class="slds-form-element slds-m-bottom_large">
+                            <lightning-combobox name="view" label="View" value={unit_View_Input}
+                                placeholder="Select an Option" options={viewOptions} onchange={handleViewSearch}
+                                variant="label-stacked" class="custom-combobox" field-level-help="Filter by View">
+                            </lightning-combobox>
+                        </div>
+
+                        <div class="slds-grid slds-gutters slds-grid_align-center">
+                            <div class="slds-col slds-size_1-of-2 button-full-width">
+                                <button class="reset-button" name="Reset" onclick={handleResetFilters}>Reset</button>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 button-full-width">
+                                <button class="filter-button" name="Filter"
+                                    onclick={filterAndClosePanel}>Filter</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+<!-- Filter Wrapper -->
+<div class="filter-wrapper">
+  <!-- Mandatory Note -->
+  <div class="mandatory-note">
+    * PLEASE SELECT EITHER PROJECT OR DEVELOPER TO FILTER RESULTS.
+  </div>
+
+  <!-- Row 1 -->
+  <div class="apple-tile-wrapper">
+    <div class="apple-tile">
+      <lightning-combobox name="project" label="Project" value={selectedProject} options={projectOptions} onchange={handleProjectChange}>
+      </lightning-combobox>
+      </div>
+  </div>
+  <div class="apple-tile-wrapper">
+    <div class="apple-tile">
+      <lightning-combobox name="developer" label="Developer" value={selectedDeveloper} options={developerOptions} onchange={handleDeveloperChange}>
+      </lightning-combobox>
+      </div>
+  </div>
+  <div class="apple-tile-wrapper">
+    <div class="apple-tile">
+      <lightning-combobox name="location" label="Location" value={selectedLocation} options={locationOptions} onchange={handleLocationChange}>
+      </lightning-combobox>
+      </div>
+  </div>
+  <div class="apple-tile-wrapper">
+    <div class="apple-tile">
+      <lightning-input type="text" label="Tower" value={tower} onchange={handletoweroChange}>
+      </lightning-input>
+      </div>
+  </div>
+  <div class="apple-tile-wrapper">
+    <div class="apple-tile">
+      <lightning-input type="text" label="Unit Number" value={unitno} onchange={handleUnitnoChange}>
+      </lightning-input>
+      </div>
+  </div>
+
+  <!-- Row 2 -->
+  <div class="apple-tile-wrapper">
+    <div class="apple-tile">
+      <lightning-input type="text" label="Bedroom" value={bedroom} onchange={handleBedroomChange}>
+      </lightning-input>
+      </div>
+  </div>
+  <div class="apple-tile-wrapper">
+    <div class="apple-tile">
+      <lightning-combobox label="Status" options={statusOptions} value={selectedStatusSearch} onchange={handleStatusSearch} field-level-help="Filter by Status">
+      </lightning-combobox>
+      </div>
+  </div>
+  <div class="apple-tile-wrapper">
+    <div class="apple-tile">
+      <lightning-combobox label="View" options={viewOptions} value={selectedViewSearch} onchange={handleViewSearch} field-level-help="Filter by View">
+      </lightning-combobox>
+      </div>
+  </div>
+
+  <!-- Spacer to align Reset properly -->
+  <div style="flex: 1 1 calc(20% - 1rem);"></div>
+  <div style="flex: 1 1 calc(20% - 1rem); display: flex; justify-content: flex-end;">
+    <button class="ios-reset-button" onclick={handleResetFilters}>Reset</button>
+  </div>
+<div class="datatable-wrapper">
+  <template if:true={units}>
+    <lightning-datatable
+      class="desktop-table"
+      key-field="Id"
+      data={units}
+      columns={columns}
+      onrowaction={handleRowAction}
+      hide-checkbox-column>
+    </lightning-datatable>
+  </template>
+</div>
+<template lwc:if={showNoUnitsMessage}>
+<div class="apple-clean-error-tile">
+  🚫 On this selected project, there is no Unit. Please select another.
+</div>
+</template>
+<div class="pagination-wrapper">
+
+  <div class="pagination-wrapper-tile">
+    <!-- Page Dropdown -->
+    <div class="pagination-tile-blue page-tile">
+      <span class="page-label">Page</span>
+      <lightning-combobox
+        name="pageSize"
+        value={pageSize}
+        options={pageSizeOptions}
+        onchange={handlePageSizeChange}>
+      </lightning-combobox>
+    </div>
+
+
+    <!-- Prev -->
+    <div class="pagination-tile-blue">
+      <lightning-button
+        label="Prev"
+        icon-name="utility:chevronleft"
+        icon-position="left"
+        variant="base"
+        onclick={handlePrev}
+        disabled={disablePrev}>
+      </lightning-button>
+    </div>
+
+    <!-- Next -->
+    <div class="pagination-tile-blue">
+      <lightning-button
+        label="Next"
+        icon-name="utility:chevronright"
+        icon-position="right"
+        variant="base"
+        onclick={handleNext}
+        disabled={disableNext}>
+      </lightning-button>
+    </div>
+  </div>
+
+</div>
+
+
+
+</div>
+
+ <!-- Table Section -->
+<div class="table-section">
+  <template if:true={units}>
+
+    <!-- Mobile Table -->
+    <lightning-datatable
+      class="mobile-table"
+      key-field="Id"
+      data={units}
+      columns={mobileColumns}
+      onrowaction={viewRecord}
+      hide-checkbox-column>
+    </lightning-datatable>
+    
+  </template>
+
+
+</div>
+
+<!-- ✅ OUTSIDE GRID -->
+
+
+        <!--Mobile Record Detail Panel-->
+        <template if:true={mobileRecordDetail}>
+            <div class="unit-backdrop" onclick={closeRecordPanel}></div>
+            <section class="unit-overlay">
+                <lightning-card class="unit-card">
+                    <div class="unit-header slds-grid slds-p-around_medium slds-text-heading_medium">
+                        <div class="slds-col slds-grow slds-text-align_center">
+                            {recordDetailName}
+                        </div>
+                        <div class="slds-col slds-shrink">
+                            <lightning-button-icon icon-name="utility:close" alternative-text="Close"
+                                onclick={closeRecordPanel} variant="border-filled"
+                                class="close-button"></lightning-button-icon>
+                        </div>
+                    </div>
+                    <div class="details slds-p-horizontal_medium slds-p-bottom_medium">
+                        <div class="slds-p-vertical_x-small">
+                            <template for:each={recordDetails} for:item="field">
+                                <div key={field.label} class="detail-item slds-p-vertical_x-small slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-2 slds-text-title_caps">
+                                        {field.label}:
+                                    </div>
+                                    <div
+                                        class="unit-value slds-col slds-size_1-of-2 slds-text-body_regular slds-text-align_right">
+                                        {field.value}
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </lightning-card>
+            </section>
+        </template>
+
+
+        <!-- Unit Detail Modal -->
+        <template if:true={selectedUnit}>
+            <section role="dialog" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-modal__title">Unit Details</h2>
+                        <button class="slds-button slds-button_icon slds-modal__close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="Close"
+                                size="small"></lightning-icon>
+                        </button>
+                    </header>
+                    <div class="slds-modal__content">
+                        <lightning-record-edit-form record-id={selectedUnitId} object-api-name="Unit__c">
+                            <lightning-messages></lightning-messages>
+                            <div class="slds-modal__content slds-p-around_medium">
+                                <template if:true={unitDetails}>
+                                    <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                                        <tbody>
+                                            <tr>
+                                                <th>Unit Name</th>
+                                                <td>{unitDetails.name}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Internal Area</th>
+                                                <td>{unitDetails.internalArea}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>External Area</th>
+                                                <td>{unitDetails.externalArea}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Total Price</th>
+                                                <td>{unitDetails.totalPrice}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Status</th>
+                                                <td>{unitDetails.status}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Project Name</th>
+                                                <td>{unitDetails.project}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Total Area Sq.ft</th>
+                                                <td>{unitDetails.totalSqft}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Size</th>
+                                                <td>{unitDetails.size}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Unit Type</th>
+                                                <td>{unitDetails.unitType}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </template>
+                            </div>
+                        </lightning-record-edit-form>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <!-- Create Inquiry Modal -->
+        <template if:true={isModalOpen}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-text-heading_medium">Create Inquiry</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <lightning-record-edit-form object-api-name="Inquiry__c" onsuccess={handleSuccess}
+                            onerror={handleError}>
+
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name="Type_of_Inquiry__c" value="Exclusive Inquiry"
+                                        required></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name="Lead_Source__c" required></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name="Region__c"></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name="Inquiry_Type__c"></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name="Transaction_Type__c"
+                                        required></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name="Contact__c"></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+
+                            <lightning-layout multiple-rows>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name="Project__c" value={selectedProject}
+                                        required></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name="Unit__c"
+                                        value={selectedUnitId}></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name="Bedrooms_min__c"
+                                        required></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name="Price_max__c" required></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name="Bedrooms_max__c"
+                                        required></lightning-input-field>
+                                </lightning-layout-item>
+                                <lightning-layout-item size="6">
+                                    <lightning-input-field field-name="Price_min__c" required></lightning-input-field>
+                                </lightning-layout-item>
+                            </lightning-layout>
+
+                            <div class="slds-m-top_medium">
+                                <lightning-button variant="brand" type="submit"
+                                    label="Create Inquiry"></lightning-button>
+                                <lightning-button variant="neutral" label="Cancel"
+                                    onclick={closeModal}></lightning-button>
+                            </div>
+                        </lightning-record-edit-form>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+<template if:true={isEditModalOpen}>
+  <div class="unit-details-modal">
+    <section role="dialog" class="slds-modal slds-fade-in-open custom-modal">
+      <div class="slds-modal__container" style="width: 800px;">
+        <header class="slds-modal__header slds-theme_shade slds-p-around_medium">
+          <h2 class="slds-modal__title slds-text-heading_medium">✏️ Edit Unit</h2>
+        </header>
+
+        <div class="slds-modal__content slds-p-around_medium">
+          <lightning-record-edit-form
+            object-api-name="Unit__c"
+            record-id={editRecord.id}
+            onsuccess={handleSuccess}
+            onerror={handleError}
+          >
+
+            <!-- Fields Grid -->
+            <div class="slds-grid slds-wrap slds-gutters_medium">
+
+              <div class="slds-col slds-size_1-of-2">
+                <div class="bsos-row">
+                  <span class="bsos-label">Project</span>
+                  <lightning-output-field field-name="Project__c" variant="label-hidden"></lightning-output-field>
+                </div>
+              </div>
+
+              <div class="slds-col slds-size_1-of-2">
+                <div class="bsos-row">
+                  <span class="bsos-label">Unit Name</span>
+                  <lightning-input-field field-name="Name" variant="label-hidden"></lightning-input-field>
+                </div>
+              </div>
+
+              <div class="slds-col slds-size_1-of-2">
+                <div class="bsos-row">
+                  <span class="bsos-label">Unit Number</span>
+                  <lightning-input-field field-name="Unit_Number__c" variant="label-hidden"></lightning-input-field>
+                </div>
+              </div>
+
+              <div class="slds-col slds-size_1-of-2">
+                <div class="bsos-row">
+                  <span class="bsos-label">Internal Area</span>
+                  <lightning-input-field field-name="Internal_Area__c" variant="label-hidden"></lightning-input-field>
+                </div>
+              </div>
+
+              <div class="slds-col slds-size_1-of-2">
+                <div class="bsos-row">
+                  <span class="bsos-label">Balcony Area</span>
+                  <lightning-input-field field-name="Balcony_Area__c" variant="label-hidden"></lightning-input-field>
+                </div>
+              </div>
+
+              <div class="slds-col slds-size_1-of-2">
+                <div class="bsos-row">
+                  <span class="bsos-label">Total Area</span>
+                  <lightning-input-field field-name="Total_Area__c" variant="label-hidden"></lightning-input-field>
+                </div>
+              </div>
+
+              <div class="slds-col slds-size_1-of-2">
+                <div class="bsos-row">
+                  <span class="bsos-label">Status</span>
+                  <lightning-input-field field-name="Status__c" variant="label-hidden"></lightning-input-field>
+                </div>
+              </div>
+
+              <div class="slds-col slds-size_1-of-2">
+                <div class="bsos-row">
+                  <span class="bsos-label">Agent Name</span>
+                  <lightning-input-field field-name="CD_Agent_Name__c" variant="label-hidden"></lightning-input-field>
+                </div>
+              </div>
+
+              <div class="slds-col slds-size_1-of-2">
+                <div class="bsos-row">
+                  <span class="bsos-label">Agent</span>
+                  <lightning-input-field field-name="Agent__c" variant="label-hidden"></lightning-input-field>
+                </div>
+              </div>
+
+              <div class="slds-col slds-size_1-of-2">
+                <div class="bsos-row">
+                  <span class="bsos-label">Booking Date</span>
+                  <lightning-input-field field-name="CD_Book_Date__c" variant="label-hidden"></lightning-input-field>
+                </div>
+              </div>
+
+              <div class="slds-col slds-size_1-of-2">
+                <div class="bsos-row">
+                  <span class="bsos-label">Size</span>
+                  <lightning-input-field field-name="CD_Size_pb__c" variant="label-hidden"></lightning-input-field>
+                </div>
+              </div>
+
+              <div class="slds-col slds-size_1-of-2">
+                <div class="bsos-row">
+                  <span class="bsos-label">Type</span>
+                  <lightning-input-field field-name="Type__c" variant="label-hidden"></lightning-input-field>
+                </div>
+              </div>
+
+              <div class="slds-col slds-size_1-of-2">
+                <div class="bsos-row">
+                  <span class="bsos-label">Sales Price</span>
+                  <lightning-input-field field-name="CD_Sales_Price__c" variant="label-hidden"></lightning-input-field>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <footer class="slds-modal__footer slds-grid slds-grid_align-end slds-p-top_medium">
+              <lightning-button label="Cancel" onclick={closeEditModal}></lightning-button>
+              <lightning-button variant="brand" type="submit" label="Save"></lightning-button>
+            </footer>
+          </lightning-record-edit-form>
+        </div>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </div>
+</template>
+
+
+<template if:true={isViewModalOpen}>
+  <div class="unit-details-modal">
+    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open custom-modal">
+      <div class="slds-modal__container">
+        <header class="slds-modal__header slds-theme_shade slds-p-around_medium">
+          <h2 class="slds-modal__title slds-hyphenate slds-text-heading_medium">📋 Unit Details</h2>
+        </header>
+
+        <div class="slds-modal__content slds-p-around_medium">
+          <lightning-record-view-form record-id={viewUnitId} object-api-name="Unit__c">
+            <div class="slds-box custom-details-box">
+
+              <!-- Basic Information -->
+              <div class="slds-text-title_caps slds-m-bottom_small">Basic Information</div>
+              <div class="slds-grid slds-wrap slds-gutters_medium">
+                <div class="slds-col slds-size_1-of-2">
+                  <div class="tile-row">
+                    <span class="tile-label">Project</span>
+                    <lightning-output-field field-name="Project__c" variant="label-hidden"></lightning-output-field>
+                  </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <div class="tile-row">
+                    <span class="tile-label">Unit Name</span>
+                    <lightning-output-field field-name="Name" variant="label-hidden"></lightning-output-field>
+                  </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <div class="tile-row">
+                    <span class="tile-label">Type</span>
+                    <lightning-output-field field-name="Type__c" variant="label-hidden"></lightning-output-field>
+                  </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <div class="tile-row">
+                    <span class="tile-label">Status</span>
+                    <lightning-output-field field-name="Status__c" variant="label-hidden"></lightning-output-field>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Area Details -->
+              <div class="slds-text-title_caps slds-m-top_medium slds-m-bottom_small">Area Details</div>
+              <div class="slds-grid slds-wrap slds-gutters_medium">
+                <div class="slds-col slds-size_1-of-2">
+                  <div class="tile-row">
+                    <span class="tile-label">Internal Area</span>
+                    <lightning-output-field field-name="Internal_Area__c" variant="label-hidden"></lightning-output-field>
+                  </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <div class="tile-row">
+                    <span class="tile-label">Balcony Area</span>
+                    <lightning-output-field field-name="Balcony_Area__c" variant="label-hidden"></lightning-output-field>
+                  </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <div class="tile-row">
+                    <span class="tile-label">Total Area</span>
+                    <lightning-output-field field-name="Total_Area_SQ_FT__c" variant="label-hidden"></lightning-output-field>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Other Details -->
+              <div class="slds-text-title_caps slds-m-top_medium slds-m-bottom_small">Other Details</div>
+              <div class="slds-grid slds-wrap slds-gutters_medium">
+                <div class="slds-col slds-size_1-of-2">
+                  <div class="tile-row">
+                    <span class="tile-label">Price</span>
+                    <lightning-output-field field-name="CD_Sales_Price__c" variant="label-hidden"></lightning-output-field>
+                  </div>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                  <div class="tile-row">
+                    <span class="tile-label">View</span>
+                    <lightning-output-field field-name="View__c" variant="label-hidden"></lightning-output-field>
+                  </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1">
+                  <div class="tile-row">
+                    <span class="tile-label">Amenities</span>
+                    <lightning-output-field field-name="Amenites_Features__c" variant="label-hidden"></lightning-output-field>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </lightning-record-view-form>
+        </div>
+
+        <footer class="slds-modal__footer slds-p-around_medium">
+          <lightning-button variant="neutral" label="Close" onclick={closeViewModal}></lightning-button>
+        </footer>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </div>
+</template>
+</template>
