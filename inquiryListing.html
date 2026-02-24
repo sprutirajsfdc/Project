@@ -1,0 +1,52 @@
+<template>
+    <template if:true={listingId}>
+        <template if:true={listingData.name}>
+            <div class="listing-tile slds-box slds-theme_default">
+                <div class="tile-header slds-media slds-media_center slds-m-bottom_medium">
+                    <div class="slds-media__figure">
+                        <lightning-icon icon-name="custom:custom2" alternative-text="Listing" size="medium"></lightning-icon>
+                    </div>
+                    <div class="slds-media__body">
+                        <h1 class="slds-text-heading_medium slds-m-left_small">Listing Details</h1>
+                    </div>
+                </div>
+
+                <template if:true={listingData.images.length}>
+                    <div class="carousel-container">
+                        <button class="carousel-arrow left" onclick={prevImage}>&#10094;</button>
+                        <img src={currentImage.url} alt={currentImage.alt} class="carousel-image" />
+                        <button class="carousel-arrow right" onclick={nextImage}>&#10095;</button>
+                    </div>
+                </template>
+                <template if:false={listingData.images.length}>
+                    <p>No images available.</p>
+                </template>
+
+                <h2 class="listing-name">
+                    <a href="javascript:void(0);" onclick={navigateToListing}>
+                        {listingData.name}
+                    </a>
+                </h2>
+
+                <div class="listing-attributes">
+                   <p>👤 <strong>Owner:</strong> {listingData.ownerName}</p>
+                    <p>🧑 <strong>Agent:</strong> {listingData.agentName}</p>
+                    <p>👥 <strong>Broker Ref ID:</strong> {listingData.brokerRefId}</p>
+                    <p>🏘️ <strong>Community:</strong> {listingData.communityName}</p>
+                    <p>📍 <strong>Sub‑Community:</strong> {listingData.subCommunityName}</p>
+                    <p>🛏️ <strong>Bedrooms:</strong> {listingData.bedrooms}</p>
+                    <p>🛁 <strong>Bathrooms:</strong> {listingData.bathrooms}</p>
+                    <p>✔️ <strong>Status:</strong> <span class={statusClass}>{listingData.status}</span></p>
+                    <p class="price">💰 <strong>Price:</strong> {listingData.price}</p>
+                    </div>
+
+            </div>
+        </template>
+        <template if:false={listingData.name}>
+            <p>Loading listing details...</p>
+        </template>
+    </template>
+    <template if:false={listingId}>
+        <p>No listing attached to this inquiry.</p>
+    </template>
+</template>

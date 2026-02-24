@@ -1,0 +1,170 @@
+.listing-tile {
+  max-width: 600px;
+  margin: 1rem auto;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+  background-color: #ffffff;
+}
+
+.tile-header {
+  border-bottom: 1px solid #d8dde6;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.carousel-container {
+  position: relative;
+  max-width: 100%;
+  height: 300px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  border-radius: 0.25rem;
+  background-color: #f4f6f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-image {
+  max-height: 280px;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 0.25rem;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.35);
+  border: none;
+  color: white;
+  font-size: 2rem;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  border-radius: 3px;
+  user-select: none;
+  transition: background-color 0.3s ease;
+  z-index: 1;
+}
+
+.carousel-arrow:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.carousel-arrow.left {
+  left: 0.25rem;
+}
+
+.carousel-arrow.right {
+  right: 0.25rem;
+}
+
+.listing-name {
+  font-size: 1.5rem;
+  margin: 0.5rem 0 1rem;
+  font-weight: 700;
+}
+
+.listing-name a {
+  color: #0070d2;
+  text-decoration: none;
+}
+
+.listing-name a:hover {
+  text-decoration: underline;
+}
+
+.listing-attributes p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.price {
+  font-size: 1.1rem;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.statusClassAvailable {
+  color: green;
+  font-weight: 600;
+}
+
+.statusClassPending {
+  color: orange;
+  font-weight: 600;
+}
+
+.statusClassSold {
+  color: red;
+  font-weight: 600;
+}
+.listing-attributes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px 24px;
+    font-family: Arial, sans-serif;
+  }
+  .listing-attributes p {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+  }
+  .listing-attributes p strong {
+    margin-left: 6px;
+    margin-right: 6px;
+    min-width: 110px; /* label width */
+  }
+  .listing-attributes p img,
+  .listing-attributes p lightning-icon,
+  .listing-attributes p span {
+    /* If you want to style icons or spans, add here */
+  }
+  .price strong {
+    color: #2c3e50;
+  }
+   .listing-attributes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px 24px;
+    font-family: Arial, sans-serif;
+  }
+  .listing-attributes p {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+  }
+  .listing-attributes p strong {
+    margin-left: 6px;
+    margin-right: 6px;
+    min-width: 110px;
+  }
+  .listing-attributes p span {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    user-select: none;
+  }
+  .status-active {
+    background-color: #28a745; /* green */
+  }
+  .status-pending {
+    background-color: #ffc107; /* yellow/orange */
+    color: #333;
+  }
+  .status-sold {
+    background-color: #dc3545; /* red */
+  }
+  .status-default {
+    background-color: #6c757d; /* gray */
+  }
