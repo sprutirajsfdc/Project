@@ -1,0 +1,1394 @@
+/* ====== Card Container ====== */
+
+.image-section {
+  width: 100%;
+  max-width: 100%;
+  height: 300px;
+  background-image: url('/resource/New');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: -0.8rem;
+}
+
+.inventory-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 0rem;
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 90%;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 18px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+.title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #f3f3f3;
+  margin-top: 6px;
+  font-family: "Segoe UI", sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 600px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.button-section {
+  margin: 20px 0;
+}
+
+.action-button {
+  background-color: #002349;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  font-size: 1rem;
+  border-radius: 1px;
+  cursor: pointer;
+}
+
+/* ====== Card Container ====== */
+.slds-card {
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  padding: 20px;
+}
+
+.slds-card:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* ====== Filter Section on Top ====== */
+.filter-section-top {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 20px 25px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  align-items: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+/* Each input fills space but with min width */
+.filter-section-top lightning-combobox,
+.filter-section-top lightning-input {
+  flex: 1 1 220px;
+  min-width: 200px;
+}
+
+/* Reset button container aligns right */
+.reset-button-container {
+  flex: 0 0 auto;
+}
+
+/* ====== Buttons (Pagination, Reset, etc) ====== */
+.slds-button {
+  background-color: #003366;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.65rem 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 3px 12px rgba(0, 74, 173, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+}
+
+.slds-button:hover {
+  background-color: #0066ff;
+  box-shadow: 0 5px 18px rgba(0, 102, 255, 0.6);
+}
+
+.slds-button:disabled {
+  background-color: #a0a8b9;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ====== Modal Styles ====== */
+.slds-modal__container {
+  /* background: #fff; */
+  border-radius: 18px;
+  /* max-width: 900px; */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  padding: 1.8rem 2.5rem;
+  overflow: hidden;
+  transition: transform 0.4s ease;
+}
+
+.slds-modal__header {
+  /* background-color: #003366; */
+  color: rgb(47, 41, 41);
+  font-weight: 100px;
+  font-size: 1.4rem;
+  padding: 1.3rem 2.5rem;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  box-shadow: 0 3px 10px rgba(0, 102, 255, 0.4);
+}
+
+.slds-button_icon.slds-modal__close {
+  color: #fff;
+  font-size: 1.6rem;
+  transition: color 0.3s ease;
+}
+
+.slds-button_icon.slds-modal__close:hover {
+  color: #cce4ff;
+}
+
+/* ====== Table Styles ====== */
+.slds-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  /* Spaced rows */
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.slds-table_bordered th,
+.slds-table_bordered td {
+  padding: 14px 18px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  vertical-align: middle;
+  border: none;
+  /* Remove border, using shadows */
+}
+
+.slds-table th {
+  font-weight: 700;
+  color: #004aad;
+  background-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-bottom: 12px;
+  box-shadow: none;
+}
+/* ✅ Allow the datatable to span the entire width of filter-wrapper */
+.datatable-wrapper {
+  grid-column: 1 / -1; /* spans all 5 columns in the grid */
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 1rem;
+}
+
+/* Optional: prevent it from being compressed */
+.datatable-wrapper lightning-datatable {
+  min-width: 100%;
+}
+/* ====== Filter Panel & Table Panel ====== */
+.filter-panel,
+.table-panel {
+  background: #f7faff;
+  padding: 20px 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 75, 173, 0.07);
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 1 !important ;
+}
+/* === TABLE WRAPPER FIX === */
+.table-section {
+  overflow-x: auto;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+/* === DATATABLE SIZING === */
+lightning-datatable.desktop-table,
+lightning-datatable.mobile-table {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* === FIX COLUMN WIDTHS === */
+.slds-table_bordered td,
+.slds-table_bordered th {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+  vertical-align: middle;
+}
+
+/* === ENSURE HEADERS ALIGN === */
+.slds-table th {
+  text-align: left;
+  padding: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #003366;
+}
+
+/* === OPTIONAL: Smaller Fonts for Better Fit === */
+.slds-table td {
+  font-size: 0.85rem;
+  padding: 12px;
+}
+
+/* === Force table to scroll smoothly if it overflows === */
+.table-section::-webkit-scrollbar {
+  height: 6px;
+}
+.table-section::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 122, 255, 0.4);
+  border-radius: 4px;
+}
+
+
+/* ====== Status Badges ====== */
+
+.status-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  justify-content: center;
+  align-items: stretch;
+  margin: 1.5rem 0;
+}
+
+.status-badge {
+  background: #ffffff;
+  border: 1.5px solid #d0e6ff;
+  border-radius: 1.4rem;
+  padding: 1rem 1.5rem;
+  min-width: 160px;
+  box-shadow: 0 4px 12px rgba(0, 112, 210, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.25s ease;
+  cursor: default;
+  user-select: none;
+}
+
+.status-badge:hover {
+  background-color: #f0f8ff;
+  border-color: #007aff;
+  box-shadow: 0 6px 16px rgba(0, 122, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.status-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #002349;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+  margin-bottom: 0.3rem;
+}
+
+.status-count {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #002349;
+  line-height: 1.1;
+  margin-bottom: 0.2rem;
+}
+
+.status-price {
+  font-size: 0.75rem;
+  color: #666666;
+  font-weight: 500;
+}
+
+/* Total Badge (slight visual boost) */
+.total-badge {
+  background-color: #f9fcff;
+  border-color: #005bbf;
+}
+
+.total-badge .status-label {
+  color: #003366;
+}
+
+.total-badge .status-price {
+  color: #C29B40;
+}
+@media (max-width: 600px) {
+  .status-badges {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .status-badge {
+    width: 100%;
+    min-width: unset;
+    padding: 0.9rem 1.2rem;
+  }
+
+  .status-count {
+    font-size: 1.8rem;
+  }
+}
+
+
+/* ====== Typography & Header ====== */
+.masin {
+  background-color: #003366;
+  color: white;
+  font-size: 18px;
+  /* Reduced from 24px */
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 800;
+  text-align: center;
+  padding: 0.5rem 0;
+  /* Reduced from 1rem */
+  border-radius: 8px 8px 0 0;
+  user-select: none;
+  letter-spacing: 0.04em;
+  box-shadow: inset 0 -3px 8px rgba(0, 58, 112, 0.4);
+}
+
+/* ====== Responsive ====== */
+/* For Tablet and above view*/
+@media (min-width: 769px){
+  
+  .filter-section-top lightning-combobox,
+  .filter-section-top lightning-input,
+  .reset-button-container {
+    flex: 1 1 100%;
+    min-width: auto;
+  }
+
+  .top-button-mobile {
+    display: none;
+  }
+  /*.top-button-desktop {
+    display: block;
+  }*/
+  
+  .desktop-table {
+    display: block;
+  }
+  
+  .mobile-table {
+    display: none;
+  }
+}
+
+/* For Mobile view*/
+@media (max-width: 768px) {
+  .filter-section-top {
+    display: none;
+  }
+  .mandotory-filter-warning {
+    display: none;
+  }
+  .top-button-mobile {
+    display: block;
+  }
+  .desktop-table {
+    display: none;
+  }
+  .mobile-table {
+    display: block;
+  }
+}
+
+@media (max-width: 400px) {
+
+  .slds-button {
+    width: 100%;
+    margin-bottom: 0.9rem;
+  }
+
+  .status-badges {
+    flex-direction: column;
+  }
+
+  .status-badge {
+    max-width: 48%;
+    padding: 1.5rem 1rem;
+    flex: 0 0 48%;
+    margin-bottom: 0.9rem;
+  }
+
+  .status-badge:last-child {
+    max-width: 48%;
+  }
+
+  .image-section {
+    height: 250px;
+  }
+
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+
+  .action-button {
+    font-size: 1rem;
+  }
+
+  /*Mobile filter panel start 1*/
+  .slds-card {
+    margin: 0.5rem;
+    max-width: none;
+  }
+
+  .slds-card__body {
+    padding: 1rem;
+  }
+
+  /*Mobile filter panel end*/
+}
+
+.custom-blue-text{
+  color:blue;
+}
+
+.slds-modal {
+  display: block !important;
+}
+
+.slds-backdrop_open {
+  display: block !important;
+}
+
+/*Mobile filter panel start 2*/
+.slide-up-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  padding: 1rem;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease-out forwards;
+  z-index: 1001;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+
+.overlayPanel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.mobileOverlayPanel {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.custom-combobox {
+  --slds-c-combobox-color-border: #d8dde6;
+}
+
+.button-full-width {
+  width: 30%;
+}
+
+.slds-card {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.slds-card__header-title {
+  font-weight: 600;
+  color: #181818;
+  justify-content: center;
+}
+
+.slds-border_bottom {
+  border-bottom: 1px solid #e5e5e5;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Reset Button Styling */
+
+.reset-button {
+  background-color: white;
+  color: #002349;
+  padding: 5px 25px;
+  font-size: 1rem;
+  border-radius: 1px;
+  border-color: #c2cad3;
+  cursor: pointer;
+}
+
+.reset-button:hover {
+    background-color: #f3f3f3;
+    border-color: #c9ccd4;
+}
+
+.filter-button {
+  background-color: #002349;
+  color: white;
+  padding: 5px 25px;
+  font-size: 1rem;
+  border-radius: 1px;
+  cursor: pointer;
+}
+
+/*Mobile filter panel End*/
+
+/*Mobile Unit detail page start*/
+
+.unit-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 998;
+}
+
+.unit-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*overflow: hidden;*/
+}
+
+.unit-card {
+    /*background-color: #4d1d0e;*/
+    color: white;
+    width: 90%;
+    max-width: 400px;
+    padding: 1rem;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    position: relative;
+    overflow-y: auto;
+    max-height: 90vh;
+    z-index: 1000;
+}
+
+/*Mobile Unit detail page end*/
+
+
+.unit-card {
+    --slds-c-card-color-background: white;
+}
+
+.unit-header {
+    background: white; /* Salesforce blue */
+    color: #003366;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0.25rem 0.25rem 0 0;
+}
+
+.detail-item {
+    border-bottom: 1px solid #f3f3f3;
+}
+
+.close-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+}
+
+.unit-value{
+  color: #003366;
+}
+
+/* Make modal wider and center content nicely */
+.slds-modal__container {
+    max-width: 700px;
+}
+
+/* Add some vertical spacing between rows */
+.slds-grid > .slds-col {
+    margin-bottom: 1rem;
+    overflow: visible;
+}
+
+/* Make the lightning-input-field take full width inside each column */
+.slds-grid lightning-input-field {
+    width: 100%;
+}
+
+/* Footer button spacing */
+.slds-modal__footer {
+    padding-top: 1rem;
+}
+
+/* Align footer buttons to right with some gap */
+.slds-modal__footer > lightning-button {
+    margin-left: 0.5rem;
+}
+.slds-modal__container {
+    max-width: 60rem;
+    width: 100%;
+}
+.slds-modal__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+.lightning-layout-item {
+    border-radius: 4px;
+    background-color: #fafafa;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.custom-modal {
+  max-width: 60rem;
+  margin: auto;
+}
+
+.custom-details-box {
+  border-left: 4px solid #1589ee;
+  border-radius: 0.5rem;
+  background-color: #f9f9f9;
+}
+
+.slds-text-title_caps {
+  color: #032d60;
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+.page-size-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.page-size-label {
+    font-weight: 600;
+    color: #002349;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.pagination-wrapper {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: relative;         /* anchor the dropdown */
+  overflow: visible !important;
+  z-index: 10;
+  padding-bottom: 3rem;       /* 👈 adds space below for dropdown */
+}
+.pagination-center {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2rem;
+}
+.unit-details-modal {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+}
+
+/* --- Modal container --- */
+.unit-details-modal .slds-modal__container {
+  max-width: 60rem;
+  border-radius: 1rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  padding: 1.5rem;
+}
+
+/* --- Modal title --- */
+.unit-details-modal .slds-modal__title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #002349;
+}
+
+/* --- Section Box --- */
+.unit-details-modal .custom-details-box {
+  background-color: #f9f9f9;
+  padding: 1rem 1.5rem;
+  border-left: 4px solid #1589ee;
+  border-radius: 0.5rem;
+}
+
+/* --- Section Headers --- */
+.unit-details-modal .slds-text-title_caps {
+  color: #032d60;
+  font-weight: bold;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.3rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* --- Compact tile layout --- */
+.unit-details-modal .tile-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 0.4rem 0.75rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #1589ee;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  min-height: 36px;
+  gap: 1rem;
+}
+
+/* --- Label (always shown) --- */
+.unit-details-modal .tile-label {
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: #1a1a1a;
+  white-space: nowrap;
+  text-align: left;
+  flex: 1;
+  margin-right: 0.5rem;
+}
+
+/* --- Output field container --- */
+.unit-details-modal lightning-output-field {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Kill SLDS auto spacing --- */
+.unit-details-modal lightning-output-field .slds-form-element {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* --- Field value --- */
+.unit-details-modal lightning-output-field .slds-form-element__control {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #002349;
+  margin: 0;
+  padding: 0;
+  text-align: right;
+  width: 100%;
+}
+
+/* --- Grid padding fix --- */
+.unit-details-modal .slds-col {
+  margin-bottom: 0.5rem;
+}
+
+/* --- Footer buttons aligned --- */
+.unit-details-modal .slds-modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* --- Force backdrop visibility --- */
+.unit-details-modal .slds-backdrop_open {
+  display: block !important;
+}
+
+/* --- Responsive: full width tiles on small screens --- */
+@media (max-width: 768px) {
+  .unit-details-modal .slds-col {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+.unit-details-modal .tile-row:hover {
+  box-shadow: 0 0 0 2px rgba(21, 137, 238, 0.1);
+}
+.button-container-ios {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+.ios-reset-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #007AFF;
+    background-color: #ffffff;
+    border: 1.5px solid #007AFF;
+    border-radius: 1.4rem;
+    box-shadow: 0 1px 4px rgba(0, 122, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    line-height: 1;
+    display: inline-block;
+}
+
+.ios-reset-button:hover {
+    background-color: #007AFF;
+    color: #ffffff;
+    box-shadow: 0 3px 10px rgba(0, 122, 255, 0.2);
+}
+
+.ios-reset-button:active {
+    transform: scale(0.97);
+}
+
+/* Extra class for extra control */
+.ios-reset-button.tiny {
+    padding: 0.35rem 0.9rem;
+    font-size: 0.8rem;
+}
+
+/* 🔷 BSOS Field Tile Box */
+.bsos-row {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border: 1px solid #0070d2; /* Sotheby’s Blue */
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 2px 5px rgba(0, 112, 210, 0.06);
+  transition: box-shadow 0.2s ease;
+}
+
+.bsos-row:hover {
+  box-shadow: 0 3px 8px rgba(0, 112, 210, 0.12);
+}
+
+/* 🏷️ Label */
+.bsos-label {
+  font-weight: 600;
+  font-size: 0.68rem;
+  color: #2a2a2a;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+
+/* ✏️ Input Fields (Text/Combobox/TextArea) */
+.bsos-row lightning-input-field lightning-input,
+.bsos-row lightning-input-field lightning-combobox,
+.bsos-row lightning-input-field lightning-textarea {
+  --slds-c-input-radius-border: 8px;
+  font-size: 0.8rem;
+  border-radius: 8px;
+  background-color: #fdfdfd;
+  padding: 0.4rem 0.6rem;
+  min-height: 36px;
+}
+
+/* ✨ Focus Behavior */
+.bsos-row lightning-input-field lightning-input:focus,
+.bsos-row lightning-input-field lightning-combobox:focus,
+.bsos-row lightning-input-field lightning-textarea:focus {
+  border: 1px solid #0070d2 !important;
+  box-shadow: 0 0 0 2px rgba(0, 112, 210, 0.15);
+}
+
+/* 📦 Output Field (Project__c Styling) */
+.bsos-row lightning-output-field {
+  font-size: 0.8rem;
+  padding: 0.4rem 0.6rem;
+  line-height: 1.6;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  background: #fdfdfd;
+  display: inline-block;
+  min-height: 36px;
+}
+
+/* 🪟 Modal Content Area */
+.custom-modal .slds-modal__content {
+  max-height: 80vh;
+  overflow-y: auto;
+  padding-bottom: 1rem;
+  background-color: #fafbfc;
+}
+
+/* 📌 Header & Footer Styling */
+.custom-modal .slds-modal__header {
+  background-color: #f7f9fb;
+  border-bottom: 1px solid #e0e0e0;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  padding: 0.75rem 1.5rem;
+}
+
+.custom-modal .slds-modal__footer {
+  background-color: #f7f9fb;
+  border-top: 1px solid #e0e0e0;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  padding: 0.75rem 1.5rem;
+}
+
+/* 📱 Mobile Responsive Styling */
+@media screen and (max-width: 768px) {
+  .bsos-row {
+    padding: 0.5rem 0.6rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .bsos-label {
+    font-size: 0.65rem;
+  }
+
+  .slds-col.slds-size_1-of-2 {
+    width: 100% !important;
+  }
+
+  .slds-modal__container {
+    width: 95% !important;
+  }
+}
+/* ====== Filter Wrapper ====== */
+.filter-wrapper {
+  background-color: #f8f9fb;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
+  border: 1.5px solid #007aff;
+  max-width: 100%;
+  margin: auto;
+
+  /* GRID STRUCTURE */
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  /* ✅ Dropdown fix */
+  position: relative;
+  overflow: visible !important;
+  contain: unset !important;  /* 🔥 remove isolation */
+  z-index: 1;
+}
+
+.filter-wrapper lightning-combobox,
+.filter-wrapper lightning-input {
+  position: relative;
+  z-index: 2;
+  overflow: visible !important;
+  isolation: isolate;
+}
+.slds-dropdown {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  margin-top: 0.4rem;
+  z-index: 9999 !important;
+
+  overflow-y: auto;
+  background: #fff;
+
+
+  max-height: 180px !important;
+
+  overflow-x: hidden;
+
+
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  scrollbar-width: thin; /* for Firefox */
+}
+
+
+/* ====== Mandatory Note ====== */
+.mandatory-note {
+  grid-column: 1 / -1; /* forces it to span across all columns */
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #007aff;
+}
+
+/* ====== Apple-style Tile ====== */
+.apple-tile-wrapper {
+  position: relative;
+  overflow: visible;
+  z-index: 0;
+  contain: layout;
+}
+.apple-tile-wrapper:has(.slds-is-open) {
+  z-index: 9999 !important; /* 🔥 Bring tile + dropdown above table */
+  position: relative;
+}
+.apple-tile {
+  background-color: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 122, 255, 0.2);
+  padding: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  min-width: 190px;
+  flex: 1 1 calc(50% - 1rem);
+  position: relative;
+  overflow: visible;
+  width: 100%;
+  contain: layout;
+}
+
+.apple-tile:hover {
+  border-color: #007aff;
+  box-shadow: 0 6px 30px rgba(0, 122, 255, 0.15);
+}
+
+
+/* ====== lightning-combobox Styling ====== */
+.apple-tile lightning-combobox {
+  --slds-c-input-radius-border: 12px;
+  --slds-c-input-shadow: none;
+  --slds-c-input-color-border: rgba(0, 122, 255, 0.2);
+  --slds-c-input-color-background: rgba(255, 255, 255, 0.4);
+  --slds-c-input-color-text: #1d1d1f;
+  --slds-c-input-font-size: 0.85rem;
+  --slds-c-input-font-weight: 500;
+  --slds-c-input-padding: 0.65rem 0.75rem;
+  --slds-c-input-line-height: 1.4;
+  border-radius: 12px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* ====== lightning-input Styling ====== */
+.apple-tile lightning-input {
+  --slds-c-input-radius-border: 12px;
+  --slds-c-input-shadow: none;
+  --slds-c-input-color-border: rgba(0, 122, 255, 0.2);
+  --slds-c-input-color-background: rgba(255, 255, 255, 0.4);
+  --slds-c-input-color-text: #1d1d1f;
+  --slds-c-input-font-size: 0.85rem;
+  --slds-c-input-font-weight: 500;
+  --slds-c-input-padding: 0.65rem 0.75rem;
+  --slds-c-input-line-height: 1.4;
+  border-radius: 12px;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* ====== Label Styling ====== */
+.apple-tile label.slds-form-element__label {
+  font-size: 0.7rem;
+  color: #6e6e73;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ====== Scrollable Dropdown Inside Tile ====== */
+.apple-tile-wrapper .slds-dropdown {
+  position: fixed !important;
+  top: calc(100px + 2rem);
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  max-height: 180px;
+  overflow-y: auto;
+  left: auto !important;
+  right: auto !important;
+  z-index: 99999 !important;
+}
+.apple-tile-wrapper .slds-combobox.slds-is-open {
+  z-index: 9999 !important;
+  position: relative;
+}
+.slds-grid,
+.slds-scrollable_y {
+  overflow: visible !important;
+  z-index: 1;
+}
+.inventory-container, .main-wrapper {
+  position: relative;
+  z-index: 0;
+  overflow: visible;
+}
+/* ====== Smooth Scrollbar (iOS style) ====== */
+.slds-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+.slds-dropdown::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 122, 255, 0.4);
+  border-radius: 6px;
+}
+
+/* ====== Prevent Clipping ====== */
+lightning-combobox,
+lightning-input,
+.slds-form-element {
+  overflow: visible !important;
+}
+
+/* ====== Dropdown Options Style ====== */
+.slds-listbox__option {
+  font-weight: 500;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  padding: 0.45rem 1rem;
+}
+
+/* ====== iOS-style Reset Button ====== */
+.ios-reset-button {
+  background-color: #ffffff;
+  color: #007aff;
+  border: 1.5px solid #007aff;
+  border-radius: 20px;
+  padding: 0.4rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.1);
+}
+
+.ios-reset-button:hover {
+  background-color: #007aff;
+  color: white;
+  box-shadow: 0 6px 20px rgba(0, 122, 255, 0.25);
+}
+
+.ios-reset-button:active {
+  transform: scale(0.97);
+}
+/* === Main Pagination Container === */
+.pagination-wrapper-tile {
+  overflow: visible !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  background-color: #ffffff00;
+  border-radius: 999px;
+  padding: 0.6rem 1rem;
+  max-width: fit-content;
+  margin: 0.5rem auto;
+  flex-wrap: nowrap;
+  z-index: 10;
+  position: relative;
+  padding-bottom: 10rem;
+}
+
+/* === Inner Buttons (Page / Prev / Next) === */
+.pagination-tile-blue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #e6f2ff, #d6eaff);
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  min-width: 110px;
+  height: 40px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(100, 149, 237, 0.1);
+}
+.pagination-container {
+  grid-column: 1 / -1; /* forces it to span across all columns */
+  display: flex;
+  justify-content: center;
+  margin-top: 0.2rem;
+
+}
+/* === Page Label (left of combobox) === */
+.page-label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #1e3a8a;
+  margin-right: 0.5rem;
+}
+/* === Adjust inner flex layout of the Page tile === */
+.pagination-tile-blue.page-tile {
+  display: flex;
+  gap: 0.4rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+}
+
+
+/* === Align the combobox properly === */
+.pagination-tile-blue.page-tile lightning-combobox {
+  --slds-c-input-radius-border: 999px;
+  --slds-c-input-color-border: transparent;
+  --slds-c-input-color-border-focus: #93c5fd;
+  --slds-c-input-color-background: #ffffff;
+  --slds-c-input-shadow: none;
+  --slds-c-input-padding-block: 0.1rem;
+  --slds-c-input-font-size: 0.85rem;
+  font-weight: 600;
+  height: 28px;
+  min-width: 72px;
+  padding: 0; /* 👈 shifts the box up */
+  transform: none;  /* remove any centering hack */
+}
+
+/* === Combobox Styling === */
+/* === Combobox Styling (Center-align number vertically) === */
+.pagination-tile-blue.page-tile lightning-combobox {
+  --slds-c-input-radius-border: 999px;
+  --slds-c-input-color-border: transparent;
+  --slds-c-input-color-border-focus: #93c5fd;
+  --slds-c-input-color-background: #ffffff;
+  --slds-c-input-shadow: none;
+  --slds-c-input-padding-block: 0.1rem;
+  --slds-c-input-font-size: 0.85rem;
+  font-weight: 600;
+  height: 28px;
+  min-width: 72px;
+  padding: 0;
+  margin-top: -41px; /* 👈 shifts the box up */
+  transform: none;  /* remove any centering hack */
+}
+
+
+/* === Lightning Buttons (Prev/Next) === */
+.pagination-tile-blue lightning-button {
+  --slds-c-button-text-color: #1e3a8a;
+  --slds-c-button-color-background: transparent;
+  --slds-c-button-color-border: transparent;
+  --slds-c-button-radius-border: 999px;
+  --slds-c-button-shadow: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  height: 32px;
+}
+
+.pagination-tile-blue lightning-button:hover {
+  text-decoration: underline;
+}
+
+.pagination-tile-blue lightning-button[disabled] {
+  --slds-c-button-text-color: #9ca3af;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-wrapper .slds-dropdown {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0;
+  right: auto;
+  z-index: 99999 !important;
+
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+
+  max-height: 300px; /* enough to show 4-5 items */
+  overflow-y: auto;  /* enables scroll if needed */
+}
+
+
+.apple-clean-error-tile {
+  grid-column: 1 / -1; /* forces it to span across all columns */
+  width: 100%;
+  padding: 1.25rem 1.75rem;
+  margin: 0.5rem 0;
+  text-align: center;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #8a1c1c; /* calm deep red for text */
+
+  background: linear-gradient(135deg, rgba(255, 230, 230, 0.6), rgba(255, 204, 204, 0.6));
+  border: 1px solid rgba(255, 180, 180, 0.4);
+  border-radius: 22px;
+
+  box-shadow:
+    0 1px 4px rgba(0, 0, 0, 0.04),
+    0 0 0 1px rgba(255, 150, 150, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+
+  transition: all 0.3s ease-in-out;
+}
+.apple-clean-error-tile:hover {
+  box-shadow:
+    0 4px 16px rgba(255, 150, 150, 0.15),
+    0 0 8px rgba(255, 150, 150, 0.12),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  transform: scale(1.002);
+}
