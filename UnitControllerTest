@@ -1,0 +1,111 @@
+@isTest
+private class UnitControllerTest {
+    
+    @testSetup
+    static void setupData() {
+        // Create Developer Project
+        Project__c project = new Project__c(
+            Name = 'Test Project',
+            Developer_Name__c = 'Test Developer',
+            Location__c = 'Test Location'
+        );
+        insert project;
+
+        // Create Units
+        List<Unit__c> units = new List<Unit__c>();
+        for (Integer i = 0; i < 5; i++) {
+            units.add(new Unit__c(
+                Name = 'Unit ' + i,
+                Project__c = project.Id
+            ));
+        }
+        insert units;
+    }
+
+    @isTest
+    static void testGetExclusiveProjects() {
+        List<Project__c> projects = UnitController.getExclusiveProjects();
+        System.assertNotEquals(0, projects.size(), 'Should return at least one project');
+    }
+
+    @isTest
+    static void testGetDeveloper() {
+        List<String> devs = UnitController.getDeveloper();
+        System.assertNotEquals(0, devs.size(), 'Should return developer names');
+        System.assert(devs.contains('Test Developer'), 'Should contain test developer');
+    }
+
+    @isTest
+    static void testGetLocation() {
+        List<String> locations = UnitController.getLocation();
+        System.assertNotEquals(0, locations.size(), 'Should return location names');
+        System.assert(locations.contains('Test Location'), 'Should contain test location');
+    }
+
+    @isTest
+    static void testGetUnits() {
+        // Prepare filters
+        Map<String, String> filters = new Map<String, String>{
+            'Developer_Name__c' => 'Test Developer',
+            'Location__c' => 'Test Location'
+        };
+
+        Test.startTest();
+        List<List<SObject>> result = UnitController.getUnits(null, filters, 2, 1);
+        Test.stopTest();
+
+        System.assertEquals(2, result.size(), 'Should return 2 lists: all and paginated');
+        System.assert(result[0].size() > 0, 'Should return at least one unit');
+    }
+
+    @isTest
+    static void testGetFieldSetFieldsWithLabel() {
+        List<Map<String, String>> fields = UnitController.getFieldSetFieldsWithLabel();
+        System.assert(fields.size() > 0, 'Field set should return fields');
+    }
+
+    @isTest
+    static void testGetPicklistValues() {
+        // Assuming Unit__c has a picklist field called Status__c
+        List<UnitController.ComboOption> options = UnitController.getPicklistValues('Unit__c', 'Status__c');
+        System.assert(options != null);
+    }
+    
+    @isTest
+    static void testGetUserProfileName() {
+        Test.startTest();
+        String profileName = UnitController.getUserProfileName();
+        Test.stopTest();
+        System.assertNotEquals(null, profileName, 'Should return the profile name of current user');
+    }
+
+    @isTest
+    static void testGetTotalUnitCount() {
+        Id projectId = [SELECT Id FROM Project__c LIMIT 1].Id;
+
+        Test.startTest();
+        Integer count = UnitController.getTotalUnitCount(projectId, 'Test Developer', 'Test Location');
+        Test.stopTest();
+
+        System.assertEquals(5, count, 'Should return the correct total unit count');
+    }
+
+    @isTest
+    static void testGetTotalSAR() {
+        Project__c project = [SELECT Id FROM Project__c LIMIT 1];
+
+        // Add prices to units to test SAR total
+        List<Unit__c> unitsToUpdate = [SELECT Id FROM Unit__c WHERE Project__c = :project.Id];
+        for (Unit__c u : unitsToUpdate) {
+            u.CD_Sales_Price__c = 1000000;
+        }
+        update unitsToUpdate;
+
+        Test.startTest();
+        Decimal totalSAR = UnitController.getTotalSAR(project.Id, 'Test Developer', 'Test Location');
+        Test.stopTest();
+
+        System.assertEquals(5000000, totalSAR, 'Should return total SAR as sum of unit prices');
+    }
+
+}
