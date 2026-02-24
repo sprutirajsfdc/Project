@@ -1,0 +1,577 @@
+/* ───────────── Hide all scrollbars ───────────── */
+*{scrollbar-width:none;-ms-overflow-style:none;}
+*::-webkit-scrollbar{display:none;}
+
+/* ───────────── Base Layout ───────────── */
+html,body{
+  margin:0;padding:0;overflow-x:hidden;width:100vw;max-width:100vw;
+  box-sizing:border-box;background:#ffffff;font-family:'Segoe UI',sans-serif;
+}
+.inventory-container{
+  display:flex;flex-direction:column;align-items:stretch;width:100%;
+  color:#1d1d1f;background:#ffffff;overflow:visible!important;
+}
+
+/* ───────────── Hero Banner ───────────── */
+.image-section{
+  width:100%;height:180px;background:url('/resource/New') center/cover no-repeat;
+  position:relative;animation:fadeInUp .6s ease-out forwards;
+  opacity:0;transform:translateY(20px);
+  border-bottom-left-radius:24px;border-bottom-right-radius:24px;
+  box-shadow:0 2px 6px rgba(0,0,0,.1);overflow:hidden;
+}
+@keyframes fadeInUp{to{opacity:1;transform:translateY(0);}}
+
+/* ───────────── Hero Overlay ───────────── */
+.overlay{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:90%;background:rgba(0,0,0,.25);backdrop-filter:blur(10px);
+  padding:.8rem 1rem;border-radius:20px;color:#fff;text-align:center;
+  box-shadow:0 8px 24px rgba(0,0,0,.2);
+}
+.title{font-size:1rem;font-weight:700;margin:0;}
+.subtitle{margin-top:.35rem;font-size:.68rem;font-weight:400;color:#f7faff;line-height:1.3;}
+
+/* ───────────── Status Tiles ───────────── */
+/* ───────────── Wrapper with Dashed Brown Border ───────────── */
+.status-wrapper {
+  margin: 0.5rem 0;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  background: #ffffff;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+
+  /* 🎯 Small brown dashed frame */
+  border: 1.5px dashed #C29B40;
+  box-shadow: none;
+}
+
+/* ───────────── Badges Container ───────────── */
+.status-badges {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.5rem 0;
+  scroll-snap-type: x mandatory;
+}
+
+.status-badges.status-center {
+  justify-content: center;
+}
+
+/* ───────────── Individual Tile (status-badge) ───────────── */
+.status-badge {
+  flex: 0 0 auto;
+  min-width: 100px;
+  height: 100px;
+  padding: 0.5rem 0.5rem;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+/* 🌈 Gradient border edge effect */
+.status-badge::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #007bff, #00c6ff);
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Inner content above gradient */
+.status-badge > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ───────────── "Total Units" special tile ───────────── */
+.status-badge.total-badge {
+  background: #f5faff;
+  border: 1px solid #007bff;
+}
+.status-badge.total-badge::before {
+  display: none;
+}
+
+/* 🔵 Hover = Blue background + glow (except total-badge) */
+.status-badge:not(.total-badge):hover {
+  background: #f5faff;
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.15);
+  transform: scale(1.015);
+}
+
+/* ───────────── Text Styles ───────────── */
+.status-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #003366;
+  margin-bottom: 0.2rem;
+  white-space: nowrap;
+  text-transform:uppercase;
+}
+
+.status-count {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #002b5c;
+}
+
+.status-price {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #86868b;
+  margin-top: 0.15rem;
+}
+
+/* 🟨 Ensure Total Unit price is gold */
+.total-badge .status-price {
+  color: #C29B40 !important;
+}
+
+/* (Optional) Active tile state */
+.status-badge.active {
+  background: #e6f2ff;
+  border-color: #007bff;
+}
+
+
+/* ───────────── Search Button ───────────── */
+.search-button-wrapper{display:flex;justify-content:center;align-items:center;padding:.5rem 1rem 1rem;}
+.search-units-tile-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.6rem 1rem; 
+  min-width:120px;border:1px dashed #08827c;border-radius:12px;font-size:.65rem;font-weight:600;
+  text-transform:uppercase;background:linear-gradient(135deg #08827c);color:#1d1d1f;
+}
+.search-units-tile-btn:hover{
+  transform:scale(1.03);
+  background:linear-gradient(135deg,#ffffff);
+
+}
+
+/* ───────────── Tile Card (outer) ───────────── */
+.apple-tile-wrapper.apple-tile{
+  background:#fff;border:1px solid rgba(0,0,0,.12);border-radius:14px;
+  padding:.9rem 1rem .85rem;box-shadow:0 3px 8px rgba(0,0,0,.05);
+  display:flex;flex-direction:column;align-items:stretch;min-width:190px;
+  flex:1 1 calc(50% - 1rem);position:relative;overflow:visible;width:100%;
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+.apple-tile-wrapper.apple-tile:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);}
+.apple-tile-wrapper.apple-tile:focus-within{border-color:#007aff;box-shadow:0 0 0 2px rgba(0,122,255,.25);}
+.apple-tile-wrapper.apple-tile:has(.slds-is-open){z-index:9999!important;}
+.apple-tile-wrapper.apple-tile .slds-form-element__label{
+  font-size:.85rem;font-weight:600;color:#333;margin-bottom:.5rem;
+}
+
+/* ───────────── Input Shell (visible grey outline) ───────────── */
+.input-shell{
+  border:1px solid #bcbcbc!important;border-radius:12px!important;background:#ffffff!important;
+  padding:.5rem .65rem!important;box-shadow:none!important;
+}
+.input-shell:focus-within{border-color:#bcbcbc!important;box-shadow:none!important;}
+
+/* remove SLDS chrome so only the wrapper shows */
+.apple-tile-wrapper.apple-tile lightning-combobox,
+.apple-tile-wrapper.apple-tile lightning-input{
+  --slds-c-input-color-border:transparent;--slds-c-input-background-color:transparent;
+  --slds-c-input-shadow:none;--slds-c-input-radius-border:0;
+  padding-left:0;padding-right:0;border:none;box-shadow:none;background:transparent;
+}
+
+/* ───────────── Dropdown Menu ───────────── */
+.apple-tile-wrapper.apple-tile .slds-dropdown{
+  position:fixed!important;background:#ffffff;border:1px solid rgba(0,122,255,.15);
+  border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.15);
+  max-height:180px;overflow-y:auto;z-index:99999!important;
+}
+
+/* ───────────── Modal & Misc Components remain unchanged ───────────── */
+/* Modal */
+.modal-backdrop{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.4);backdrop-filter:blur(2px);display:flex;justify-content:center;align-items:center;z-index:1000;overflow-y:auto;pointer-events: auto;touch-action: none;}
+.modal-container{position:fixed;background:#fff;padding:1rem;border-radius:20px;width:90%;max-width:360px;box-shadow:0 8px 24px rgba(0,0,0,.2);overflow-y:auto;max-height:90vh;position:relative;z-index:1001;}
+.modal-title{margin-bottom:1rem;font-size:.95rem;font-weight:600;color:#003366;text-align:center;}
+.modal-filters{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1rem;}
+.modal-actions{display:flex;justify-content:space-between;gap:.5rem;margin:1rem 0;}
+.modal-actions .btn{flex:1;padding:.5rem .8rem;border-radius:10px;font-weight:600;font-size:.7rem;cursor:pointer;border:none;}
+.modal-actions .cancel{background:#f2f2f2;color:#333;}
+.modal-actions .reset{background:#fff4cc;color:#b47a00;}
+.modal-actions .primary{background:#007aff;color:#fff;}
+
+/* Unit cards */
+.unit-list {
+  padding: 0 1rem;
+}
+
+/* ──────────────── Main Card ──────────────── */
+.unit-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  padding: 0.75rem 0.75rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.75rem;
+}
+
+/* ──────────────── Status Pill ──────────────── */
+.unit-status-tag {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  padding: 4px 10px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-align: center;
+  text-transform: uppercase;
+  min-width: 70px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Colored status pills */
+.status-Available    { background: linear-gradient(145deg, #d8fbe5, #b6efcd); color: #1e7f4c; }
+.status-OnHold       { background: linear-gradient(145deg, #e3f0ff, #c3dcff); color: #1a56b3; }
+.status-Pipeline     { background: linear-gradient(145deg, #fff3cd, #ffe8a1); color: #b45f06; }
+.status-Block        { background: linear-gradient(145deg, #f0f0f0, #dbdbdb); color: #444; }
+.status-Cancelled    { background: linear-gradient(145deg, #fdecea, #fbc6c3); color: #b22222; }
+.status-Sold         { background: linear-gradient(145deg, #f3e5f5, #e1bee7); color: #6a1b9a; }
+
+
+/* ──────────────── Unit Name ──────────────── */
+.unit-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: center;
+  color: #002447;
+  margin-bottom: 0.3rem;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+/* ──────────────── Content Grid ──────────────── */
+.unit-content {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+/* 🖼 Image */
+.unit-img {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+.unit-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 📄 Info Grid */
+.unit-info-grid {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  gap: 0.4rem;
+}
+
+/* Each row = 2 fields */
+.info-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.info-row > div {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 🏷 Label + Value */
+.label-value {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #002447;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ──────────────── Responsive ──────────────── */
+@media screen and (max-width: 480px) {
+  .unit-card {
+    padding: 0.7rem;
+  }
+
+  .unit-content {
+    flex-direction: row;
+  }
+
+  .unit-info-grid {
+    gap: 0.5rem;
+  }
+
+  .unit-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: block;
+    max-width: calc(100% - 6rem); 
+  }
+
+  .unit-img {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+/* Text helpers */
+.filter-note{font-size:.75rem;font-style:italic;color:#b47a00;margin-bottom:.6rem;}
+.no-data {
+  font-size: 0.75rem;
+  color: #ff0000;
+  text-align: center;
+  margin: 0.5rem auto;
+  padding: 0.5rem 1rem;
+  max-width: 300px;
+  min-height: 44px;
+
+  background: rgba(242, 128, 128, 0.08);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(215, 202, 18, 0.2);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; 
+}
+
+.no-data-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.no-data-text {
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+
+/* Responsive tweaks */
+@media(max-width:768px){
+  .status-badge{min-width:85px;padding:.5rem;}
+  .search-units-tile-btn{min-width:100px;padding:.5rem .8rem;}
+  .modal-actions .btn{font-size:.65rem;}
+  lightning-combobox,lightning-input{font-size:.7rem;padding:.35rem;}
+  .modal-filters{flex-wrap:wrap;}
+  .apple-tile-wrapper.apple-tile{flex:1 1 calc(50% - .75rem);}
+  .apple-tile-wrapper:has(.slds-is-open){z-index:10000!important;}
+  .apple-tile-wrapper .slds-dropdown{position:fixed!important;left:1rem!important;right:1rem!important;max-height:200px;}
+}
+@media(max-width:480px){
+  .card-img img{width:90px;}
+  .unit-title{font-size:.85rem;}
+  .apple-tile-wrapper.apple-tile{flex:1 1 100%;}
+  .modal-container{width:95%;padding:.8rem;}
+}
+
+/* Overrides */
+.slds-dropdown-trigger{z-index:100!important;}
+.slds-combobox.slds-dropdown-trigger.slds-is-open{z-index:10000!important;}
+
+/* Hide scrollbars on key containers */
+.inventory-container,
+.modal-container,
+.status-badges,
+.unit-list,
+.slds-dropdown,
+.apple-tile-wrapper.apple-tile .slds-dropdown{
+  scrollbar-width:none;-ms-overflow-style:none;
+}
+.inventory-container::-webkit-scrollbar,
+.modal-container::-webkit-scrollbar,
+.status-badges::-webkit-scrollbar,
+.unit-list::-webkit-scrollbar,
+.slds-dropdown::-webkit-scrollbar,
+.apple-tile-wrapper.apple-tile .slds-dropdown::-webkit-scrollbar{
+  display:none;
+}
+
+/* 🍎 Unit Detail Modal – Apple style read-only */
+.unit-detail-modal .modal-container {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
+  padding: 1rem 1.2rem;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  animation: fadeSlideUp 0.25s ease-in-out;
+  font-family: 'SF Pro Display', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.unit-detail-modal .modal-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #003366;
+  text-align: center;
+  margin-bottom: 1rem;
+  text-transform: capitalize;
+}
+
+/* 🍏 Field tiles (label + value stack) */
+.modal-fields-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.field-tile {
+  padding: 0.8rem 1rem;
+  background: linear-gradient(135deg, #fefefe, #f9f9f9);
+  border-radius: 14px;
+  border: 1px solid #ebebeb;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  position: relative;
+  transition: all 0.25s ease;
+}   
+
+.field-label {
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: #02172f;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.field-value {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #1d1d1f;
+  font-family: 'SF Mono', 'Courier New', monospace;
+  word-break: break-word;
+}
+
+.field-tile:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+/* Buttons */
+.unit-detail-modal .modal-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.2rem;
+}
+.unit-detail-modal .btn.cancel {
+  background: #f4f4f4;
+  color: #444;
+  border: 1px solid #ccc;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.75rem;
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Animation */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.unit-detail-modal .modal-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.2rem;
+}
+
+.unit-detail-modal .btn.cancel {
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  border: 1px solid #ddd;
+  color: #333;
+  padding: 0.4rem 1.2rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  border-radius: 999px;
+  width: auto;
+  max-width: 160px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease-in-out;
+  backdrop-filter: blur(6px);
+}
+
+/* Hover effect */
+.unit-detail-modal .btn.cancel:hover {
+  background: linear-gradient(145deg, #e8f0ff, #d0e2ff);
+  border-color: #007aff;
+  color: #003366;
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
+  transform: scale(1.035);
+  cursor: pointer;
+}
+
+
+/* Mobile responsiveness */
+@media screen and (max-width: 480px) {
+  .unit-detail-modal .modal-container {
+    padding: 0.9rem 1rem;
+  }
+ .field-label {
+    font-size: 0.62rem;
+  }
+  .field-value {
+    font-size: 0.75rem;
+  }
+}
+body.modal-open {
+  overflow: hidden;
+  pointer-events: none;
+}
+
+body.modal-open .modal-backdrop {
+  pointer-events: auto !important;
+}
