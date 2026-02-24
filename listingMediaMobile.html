@@ -1,0 +1,56 @@
+<template>
+  <div class="slds" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+    <template if:true={hasMedia}>
+      <div class="hero"
+           ontouchstart={onTouchStart}
+           ontouchmove={onTouchMove}
+           ontouchend={onTouchEnd}
+           onmousedown={onMouseDown}
+           onmousemove={onMouseMove}
+           onmouseup={onMouseUp}
+           onclick={openLightbox}
+           role="button"
+           aria-label="Open image viewer">
+
+
+        <div class="hero-head">
+          <span class="chip">MEDIA IMAGE</span>
+        </div>
+
+
+        <img class={heroImgClass}
+             style={heroImgStyle}
+             src={current.url}
+             alt={current.title}
+             loading="eager" />
+
+
+        <div class="pager" aria-hidden="true">
+          <template for:each={indicators} for:item="p">
+            <span key={p.key} class={p.class}>{p.char}</span>
+          </template>
+        </div>
+      </div>
+    </template>
+
+
+    <template if:false={hasMedia}>
+      <div class="empty">
+        <div class="empty-illustration">🖼️</div>
+        <div>No media available for this listing.</div>
+      </div>
+    </template>
+
+
+    <template if:true={showLightbox}>
+      <section class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" onclick={onLightboxBackdrop}>
+        <img class={lightboxImgClass}
+             src={current.url}
+             alt={current.title}
+             onclick={toggleZoom}
+             onload={onLightboxImgLoad} />
+        <button class="lb-btn close" onclick={closeLightbox} title="Close">×</button>
+      </section>
+    </template>
+  </div>
+</template>
