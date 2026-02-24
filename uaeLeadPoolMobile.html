@@ -1,0 +1,328 @@
+<template>
+
+  <div class="four-column">
+
+    <!-- COLUMN 1 — FILTER PANEL -->
+    <div class="left-filter">
+
+      <header class="hdr hdr--frost">
+        <div class="hdr__inner">
+          <div class="hdr__title">Inquiry Lead Pool</div>
+        </div>
+      </header>
+
+      <template if:true={showFilters}>
+        <section class="panel panel--glass panel--glow">
+          <div class="panel__hdr">
+            <h2 class="panel__title">Filters</h2>
+          </div>
+
+          <!-- 🔥 FULL FILTER FIELDS FROM YOUR SECOND CODE -->
+          <div class="grid grid--filters">
+            <!-- <div class="field field--curve field--glow"> -->
+
+            <!-- Search -->
+            <div class="field field--curve field--glow">
+              <lightning-input type="text" label="Search Inquiry Name / Ref" value={nameOrRef} onchange={onChangeName}
+                placeholder="e.g. INQ-00123">
+              </lightning-input>
+            </div>
+            <!-- </div> -->
+
+            <!-- Community -->
+
+            <div class="field field--curve field--glow">
+              <div class="tokenselect">
+                <label class="tokenselect__label">Community</label>
+                <div class="tokenselect__box" onclick={focusCommunityInput}>
+                  <template for:each={communities} for:item="c">
+                    <span key={c} class="token">
+                                            <span class="dot"></span>{c}
+                    <button class="x" data-value={c} onclick={removeCommunity} title="Remove">×</button>
+                    </span>
+                  </template>
+
+                  <input
+                      class="tokenselect__input"
+                      value={communityQuery}
+                      oninput={onCommunityQuery}
+                      onkeydown={onCommunityKeydown}
+                      placeholder="Type to add..."
+                      aria-label="Add Community" />
+                </div>
+
+                <template if:true={showCommunityDropdown}>
+                  <ul class="dropdown" role="listbox">
+                    <template for:each={communityFiltered} for:item="opt">
+                      <li key={opt.value} data-value={opt.value} onclick={pickCommunity} role="option">
+                        {opt.label}
+                      </li>
+                    </template>
+                    <template if:false={communityFiltered.length}>
+                      <li class="empty">No matches</li>
+                    </template>
+                  </ul>
+                </template>
+              </div>
+            </div>
+
+            <!-- Sub Community -->
+            <div class="field field--curve field--glow">
+              <div class="tokenselect">
+                <label class="tokenselect__label">Sub Community</label>
+                <div class="tokenselect__box" onclick={focusSubCommunityInput}>
+                  <template for:each={subCommunities} for:item="s">
+                    <span key={s} class="token">
+                                            <span class="dot"></span>{s}
+                    <button class="x" data-value={s} onclick={removeSubCommunity} title="Remove">×</button>
+                    </span>
+                  </template>
+
+                  <input
+                                        class="tokenselect__input"
+                                        value={subCommunityQuery}
+                                        oninput={onSubCommunityQuery}
+                                        onkeydown={onSubCommunityKeydown}
+                                        placeholder="Type to add..."
+                                        aria-label="Add Sub Community" />
+                </div>
+
+                <template if:true={showSubCommunityDropdown}>
+                  <ul class="dropdown" role="listbox">
+                    <template for:each={subCommunityFiltered} for:item="opt">
+                      <li key={opt.value} data-value={opt.value} onclick={pickSubCommunity} role="option">
+                        {opt.label}
+                      </li>
+                    </template>
+                    <template if:false={subCommunityFiltered.length}>
+                      <li class="empty">No matches</li>
+                    </template>
+                  </ul>
+                </template>
+              </div>
+            </div>
+
+            <!-- Inquiry Type -->
+            <div class="field field--curve field--glow">
+              <lightning-combobox label="Inquiry Type" options={inquiryOptionsFiltered} value={inquiryType}
+                onchange={onChangeInquiryType}>
+              </lightning-combobox>
+            </div>
+
+            <!-- Status -->
+            <div class="field field--curve field--glow">
+              <lightning-combobox label="Status" options={statusOptionsFiltered} value={status}
+                onchange={onChangeStatus}>
+              </lightning-combobox>
+            </div>
+
+            <!-- Sub Status -->
+            <div class="field field--curve field--glow">
+              <lightning-combobox label="Sub Status" options={subStatusOptionsFiltered} value={subStatus}
+                onchange={onChangeSubStatus}>
+              </lightning-combobox>
+            </div>
+
+            <!-- Property Type -->
+            <div class="field field--curve field--glow">
+              <lightning-combobox label="Property Type" options={typeOptions} value={propertyType}
+                onchange={onChangePropertyType}>
+              </lightning-combobox>
+            </div>
+
+            <!-- Price Min/Max -->
+            <div class="field two field--curve field--glow">
+              <lightning-input type="number" label="Price - Min" value={priceMin} onchange={onChangePriceMin}>
+              </lightning-input>
+              <lightning-input type="number" label="Price - Max" value={priceMax} onchange={onChangePriceMax}>
+              </lightning-input>
+            </div>
+
+            <!-- Bedrooms Min/Max -->
+            <div class="field two field--curve field--glow">
+              <lightning-input type="number" label="Bedrooms - Min" value={bedMin} onchange={onChangeBedMin}>
+              </lightning-input>
+              <lightning-input type="number" label="Bedrooms - Max" value={bedMax} onchange={onChangeBedMax}>
+              </lightning-input>
+            </div>
+
+            <!-- Created Start/End Date -->
+            <div class="field two field--curve field--glow field--date">
+              <div class="date-cell">
+                <lightning-input type="date" label="Created Start Date" value={createdStart}
+                  onchange={onChangeCreatedStart}></lightning-input>
+              </div>
+              <div class="date-cell">
+                <lightning-input type="date" label="Created End Date" value={createdEnd} onchange={onChangeCreatedEnd}>
+                </lightning-input>
+              </div>
+            </div>
+
+          </div>
+
+         <div class="filter-actions">
+    <button class="filter-btn-html reset-btn" onclick={handleReset}>
+        Reset
+    </button>
+    <button class="filter-btn-html search-btn" onclick={handleSearch}>
+        Search
+    </button>
+</div>
+
+        </section>
+      </template>
+
+    </div>
+
+    <!-- RIGHT SIDE (unchanged) -->
+    <div class="right-cards">
+
+     <template if:true={hasSearched}>
+
+      <template if:true={isFirstPage}>
+  <div class="total-records-box">
+    <span class="total-records-text">
+      {totalRecords} Records Found
+    </span>
+  </div>
+</template>
+
+    <!-- 🔄 VIEW SWITCH -->
+    <div class="view-switch-row">
+        <lightning-button-group>
+            <lightning-button 
+                label="Card" 
+                variant={cardBtnVariant} 
+                onclick={setCardView}>
+            </lightning-button>
+
+            <lightning-button 
+                label="Table" 
+                variant={tableBtnVariant} 
+                onclick={setTableView}>
+            </lightning-button>
+        </lightning-button-group>
+    </div>
+
+    <!-- ======================
+         CARD VIEW
+    ====================== -->
+    <template if:true={isCardView}>
+
+        <div class="card-grid-3col">
+            <template for:each={rows} for:item="r">
+                <article key={r.Id} class="inquiry-card">
+
+                    <header class="inquiry-card__hdr">
+                        <h3 class="inquiry-card__title">{r.Name}</h3>
+                    </header>
+
+                    <!-- STATUS BADGE -->
+                    <div class="status-badge" style={r.statusBadgeStyle}>
+                        {r.Status__c}
+                    </div>
+
+                    <!-- OWNER + DATE -->
+                    <div class="owner-row">
+                        <div class="owner-left">
+                            <span class="owner-label">Owner:</span>
+                            <span class="owner-value">{r.OwnerName}</span>
+                        </div>
+                        <span class="owner-date">{r.CreatedDateFormatted}</span>
+                    </div>
+
+                    <!-- TAGS -->
+                    <div class="tag-row">
+
+                        <template if:true={r.showLostReason}>
+                            <span class="tag">{r.Lost_Reason__c}</span>
+                        </template>
+
+                        <template if:true={r.Inquiry_Type__c}>
+                            <span class="tag">{r.Inquiry_Type__c}</span>
+                        </template>
+
+                        <template if:true={r.Property_Type__c}>
+                            <span class="tag">{r.Property_Type__c}</span>
+                        </template>
+
+                    </div>
+
+                    <!-- BUDGET -->
+                    <div class="inquiry-section">
+                        <div class="row">
+                            <span class="row-label">Budget</span>
+                            <span class="row-value">{r.Price_Min_Formatted} — {r.Price_Max_Formatted}</span>
+                        </div>
+                    </div>
+
+                    <div class="separator"></div>
+
+                    <!-- LOCATION -->
+                    <div class="inquiry-section">
+                        <div class="row">
+                            <span class="row-label">Location</span>
+                            <div class="row-value multiline">
+                                {r.Community_Propertyfinder__c}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="separator"></div>
+
+                    <!-- BEDROOMS -->
+                    <div class="inquiry-section">
+                        <div class="row">
+                            <span class="row-label">Bedrooms</span>
+                            <span class="row-value">{r.Bedrooms_min__c} — {r.Bedrooms_max__c}</span>
+                        </div>
+                    </div>
+
+                </article>
+            </template>
+        </div>
+
+        <!-- CARD PAGINATION -->
+        <div class="pagination-3col">
+            <button onclick={previousPage} disabled={disableFirst} class="page-btn">Previous</button>
+            <div class="page-info">Page {pageNumber}</div>
+            <button onclick={nextPage} disabled={disableLast} class="page-btn">Next</button>
+        </div>
+
+    </template>
+
+    <!-- ======================
+         TABLE VIEW
+    ====================== -->
+    <template if:false={isCardView}>
+
+       <div class="table-wrapper">
+
+        <lightning-datatable
+            key-field="Id"
+            data={rows}
+            columns={columns}
+            hide-checkbox-column
+            onrowaction={handleRowAction}>
+        </lightning-datatable>
+
+        <!-- TABLE PAGINATION -->
+        <div class="pagination-3col">
+            <button onclick={previousPage} disabled={disableFirst} class="page-btn">Previous</button>
+            <div class="page-info">Page {pageNumber}</div>
+            <button onclick={nextPage} disabled={disableLast} class="page-btn">Next</button>
+        </div>
+        </div>
+
+    </template>
+
+</template>
+
+
+</div>
+
+     
+
+  </div>
+
+</template>
