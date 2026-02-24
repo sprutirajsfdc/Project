@@ -1,0 +1,347 @@
+/**
+* @File Name : UnitControllerMobile.cls
+* @Description :
+* @Author : Badrus Sathar
+* @Last Modified By :  Badrus Sathar
+* @Last Modified On : September 8, 2025
+* @Modification Log :
+*==============================================================================
+* Ver | Date | Author | Modification
+*==============================================================================
+* 1.0 | September 8, 2025 |   | Initial Version
+**/
+
+public with sharing class UnitControllerMobile {
+
+    @AuraEnabled(cacheable=true)
+    public static List<Project__c> getExclusiveProjects() {
+        return [
+            SELECT Id, Name, Developer_Name__c, Location__c
+            FROM Project__c
+            WHERE Offboarded__c = false
+            ORDER BY Name
+        ];
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<String> getDeveloper() {
+        List<String> devs = new List<String>();
+        for (AggregateResult ar : [
+            SELECT Developer_Name__c developer
+            FROM Project__c
+            WHERE Developer_Name__c != null AND Offboarded__c = false
+            GROUP BY Developer_Name__c
+            ORDER BY Developer_Name__c
+        ]) {
+            devs.add((String)ar.get('developer'));
+        }
+        return devs;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<String> getLocation() {
+        List<String> locs = new List<String>();
+        for (AggregateResult ar : [
+            SELECT Location__c loc
+            FROM Project__c
+            WHERE Location__c != null AND Offboarded__c = false
+            GROUP BY Location__c
+            ORDER BY Location__c
+        ]) {
+            locs.add((String)ar.get('loc'));
+        }
+        return locs;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<Map<String,String>> getFieldSetFieldsWithLabel() {
+        List<Map<String,String>> out = new List<Map<String,String>>();
+        Map<String,Schema.SObjectField> fMap = Schema.SObjectType.Unit__c.fields.getMap();
+
+        for (Schema.FieldSetMember m :
+             SObjectType.Unit__c.FieldSets.Unit_Filter_Filled.getFields()) {
+
+            if (!fMap.containsKey(m.getFieldPath())) continue;
+            Schema.DescribeFieldResult d = fMap.get(m.getFieldPath()).getDescribe();
+
+            out.add(new Map<String,String>{
+                'apiName' => m.getFieldPath(),
+                'label'   => d.getLabel(),
+                'type'    => String.valueOf(d.getType())  
+            });
+        }
+        return out;
+    }
+
+    public class ComboOption {
+        @AuraEnabled public String label;
+        @AuraEnabled public String value;
+        public ComboOption(String l,String v){label=l;value=v;}
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<ComboOption> getPicklistValues(String objectApiName,
+                                                      String fieldApiName) {
+        Schema.SObjectType sobj = Schema.getGlobalDescribe().get(objectApiName);
+        if (sobj == null) return new List<ComboOption>();
+
+        Schema.DescribeFieldResult d =
+            sobj.getDescribe().fields.getMap().get(fieldApiName).getDescribe();
+
+        List<ComboOption> opts = new List<ComboOption>();
+        for (Schema.PicklistEntry pe : d.getPicklistValues()) {
+            opts.add(new ComboOption(pe.getLabel(), pe.getValue()));
+        }
+        return opts;
+    }
+
+    private static Boolean isReal(String v){ return !String.isBlank(v) && v != 'All'; }
+
+    private static List<String> baseConds() {
+        return new List<String>{'(Project__r.Offboarded__c = false)'};
+    }
+
+    private static List<String> addTopLevel(Id proj,String dev,String loc){
+        List<String> c = baseConds();
+        if (proj != null && String.valueOf(proj) != 'All') c.add('Project__c = :proj');
+        if (isReal(dev)) c.add('Project__r.Developer_Name__c = :dev');
+        if (isReal(loc)) c.add('Project__r.Location__c = :loc');
+        return c;
+    }
+
+
+    @AuraEnabled(cacheable=true)
+    public static Integer getTotalUnitCount(Id proj,String dev,String loc){
+        String q = 'SELECT COUNT() FROM Unit__c';
+        List<String> conds = addTopLevel(proj,dev,loc);
+        if (!conds.isEmpty()) q += ' WHERE ' + String.join(conds,' AND ');
+        return Database.countQuery(q);
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static Decimal getTotalSAR(Id proj,String dev,String loc){
+        String q = 'SELECT SUM(CD_Sales_Price__c) total FROM Unit__c';
+        List<String> conds = addTopLevel(proj,dev,loc);
+        if (!conds.isEmpty()) q += ' WHERE ' + String.join(conds,' AND ');
+        AggregateResult ar = (AggregateResult)Database.query(q);
+        Decimal tot = (Decimal)ar.get('total');
+        return tot != null ? tot : 0;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<String> getAllStatusLabels(){
+        List<String> out = new List<String>();
+        for (Schema.PicklistEntry e :
+             Unit__c.Status__c.getDescribe().getPicklistValues())
+            if (e.isActive()) out.add(e.getValue());
+        return out;
+    }
+
+    private static Boolean needsQuotes(Schema.DisplayType t){
+        return !(t==Schema.DisplayType.Boolean  ||
+                 t==Schema.DisplayType.Currency ||
+                 t==Schema.DisplayType.Double   ||
+                 t==Schema.DisplayType.Integer  ||
+                 t==Schema.DisplayType.Percent  ||
+                 t==Schema.DisplayType.Date     ||
+                 t==Schema.DisplayType.DateTime );
+    }
+
+@AuraEnabled(cacheable=true)
+public static List<List<SObject>> getUnits(Id proj, Map<String,String> filters) {
+    String dev = (filters != null) ? filters.get('Developer_Name__c') : null;
+    String loc = (filters != null) ? filters.get('Location__c')       : null;
+
+    List<String> conds = addTopLevel(proj, dev, loc);
+
+    Map<String,Schema.SObjectField> fmap = Schema.SObjectType.Unit__c.fields.getMap();
+    if (filters != null) {
+        for (String fieldApi : filters.keySet()) {
+            String val = filters.get(fieldApi);
+            if (!isReal(val)) continue;
+            if (fieldApi=='Developer_Name__c' || fieldApi=='Location__c' || fieldApi=='Project__c') continue;
+
+            if (fmap.containsKey(fieldApi)) {
+                Schema.DisplayType dt = fmap.get(fieldApi).getDescribe().getType();
+                if (dt==Schema.DisplayType.String ||
+                    dt==Schema.DisplayType.Picklist ||
+                    dt==Schema.DisplayType.TextArea) {
+                    conds.add(fieldApi + ' LIKE \'%' + String.escapeSingleQuotes(val) + '%\'');
+                } else if (needsQuotes(dt)) {
+                    conds.add(fieldApi + ' = \'' + String.escapeSingleQuotes(val) + '\'');
+                } else {
+                    conds.add(fieldApi + ' = ' + String.escapeSingleQuotes(val));
+                }
+            } else if (fieldApi == 'Location__c') {
+                conds.add('Project__r.Location__c = \'' + String.escapeSingleQuotes(val) + '\'');
+            }
+        }
+    }
+
+    List<String> selectFields = new List<String>{
+        'Id','Name','Status__c','CD_Sales_Price__c','CD_Bedrooms__c',
+        'CD_Bathrooms_US__c','Total_Area_SQ_FT__c','Reference_Number__c',
+        'Unit_Number__c','SQM__c','Project__r.Name' 
+    };
+    for (Schema.FieldSetMember f : SObjectType.Unit__c.FieldSets.Unit_Filter_Filled.getFields()) {
+        String path = f.getFieldPath();
+        if (fmap.containsKey(path) && !selectFields.contains(path)) {
+            selectFields.add(path);
+        }
+    }
+
+    String soql = 'SELECT ' + String.join(selectFields, ', ') + ' FROM Unit__c';
+    if (!conds.isEmpty()) {
+        soql += ' WHERE ' + String.join(conds, ' AND ');
+    }
+
+    System.debug('IM.getUnits SOQL => ' + soql);
+
+    List<SObject> rows = Database.query(soql);
+    return new List<List<SObject>>{ rows };
+}
+
+    @AuraEnabled(cacheable=true)
+    public static Map<String,String> getListingImages(List<String> unitIds){
+        Map<String,String> out = new Map<String,String>();
+        if (unitIds == null || unitIds.isEmpty()) return out;
+
+        Map<Id,Id> unitToListing = new Map<Id,Id>();
+        for (Listing__c l : [SELECT Id, Unit__c FROM Listing__c WHERE Unit__c IN :unitIds]){
+            if (l.Unit__c != null && !unitToListing.containsKey(l.Unit__c))
+                unitToListing.put(l.Unit__c, l.Id);
+        }
+        if (unitToListing.isEmpty()) return out;
+
+        Map<Id,String> listingToUrl = new Map<Id,String>();
+        for (Property_Media__c pm : [
+            SELECT Listing__c, Public_URL__c
+            FROM Property_Media__c
+            WHERE Listing__c IN :unitToListing.values() AND Public_URL__c != null
+            ORDER BY CreatedDate
+        ]) if (!listingToUrl.containsKey(pm.Listing__c))
+                listingToUrl.put(pm.Listing__c, pm.Public_URL__c);
+
+        for (Id uId : unitToListing.keySet()) {
+            Id lId = unitToListing.get(uId);
+            if (listingToUrl.containsKey(lId))
+                out.put(String.valueOf(uId), listingToUrl.get(lId));
+        }
+        return out;
+    }
+	@AuraEnabled(cacheable=true)
+	public static List<Map<String, String>> getMobileFields(Id unitId) {
+		if (unitId == null) return new List<Map<String, String>>();
+
+		Map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.Unit__c.fields.getMap();
+		List<Schema.FieldSetMember> fs = SObjectType.Unit__c.FieldSets.Mobilefields.getFields();
+
+		Set<String> baseFields = new Set<String>{ 'Id' };
+		Map<String, String> lookupFields = new Map<String, String>();
+
+		for (Schema.FieldSetMember f : fs) {
+			String api = f.getFieldPath();
+			if (!fieldMap.containsKey(api)) continue;
+
+			Schema.DescribeFieldResult fieldDescribe = fieldMap.get(api).getDescribe();
+
+			if (fieldDescribe.getType() == Schema.DisplayType.Reference) {
+				baseFields.add(api);
+				String relationshipName = api.replace('__c', '__r');
+				baseFields.add(relationshipName + '.Name');
+				lookupFields.put(api, relationshipName + '.Name');
+			} else {
+				baseFields.add(api);
+			}
+		}
+
+		String query = 'SELECT ' + String.join(new List<String>(baseFields), ', ') +
+					' FROM Unit__c WHERE Id = :unitId LIMIT 1';
+		Unit__c record = (Unit__c)Database.query(query);
+
+		List<Map<String, String>> out = new List<Map<String, String>>();
+		for (Schema.FieldSetMember f : fs) {
+			String api = f.getFieldPath();
+			String label = fieldMap.get(api).getDescribe().getLabel();
+			String value;
+
+			if (lookupFields.containsKey(api)) {
+				String relName = lookupFields.get(api).split('\\.')[0]; 
+				SObject related = (SObject)record.getSObject(relName);
+				value = related != null ? String.valueOf(related.get('Name')) : '';
+			} else {
+				Object raw = record.get(api);
+				value = raw != null ? String.valueOf(raw) : '';
+			}
+
+			out.add(new Map<String, String>{
+				'label' => label,
+				'value' => value
+			});
+		}
+
+		return out;
+	}
+
+	@AuraEnabled(cacheable=true)
+	public static List<Map<String,String>> getUnitFieldSetValues(Id unitId, String fieldSetApiName) {
+		List<Map<String,String>> out = new List<Map<String,String>>();
+		if (unitId == null || String.isBlank(fieldSetApiName)) return out;
+
+		Schema.FieldSet fs = SObjectType.Unit__c.FieldSets.getMap().get(fieldSetApiName);
+		if (fs == null) return out;
+
+		Map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.Unit__c.fields.getMap();
+
+		Set<String> selectFields = new Set<String>{ 'Id' };
+		Map<String, String> refRel = new Map<String, String>(); 
+
+		for (Schema.FieldSetMember m : fs.getFields()) {
+			String api = m.getFieldPath();
+			if (!fieldMap.containsKey(api)) continue;
+
+			selectFields.add(api);
+
+			Schema.DescribeFieldResult d = fieldMap.get(api).getDescribe();
+			if (d.getType() == Schema.DisplayType.Reference) {
+				String rel = d.getRelationshipName(); 
+				if (String.isBlank(rel)) {
+					if (api.endsWith('Id'))        rel = api.substring(0, api.length()-2); 
+					else if (api.endsWith('__c'))  rel = api.substring(0, api.length()-3) + '__r';
+				}
+				if (!String.isBlank(rel)) {
+					selectFields.add(rel + '.Name');
+					refRel.put(api, rel);
+				}
+			}
+		}
+
+		String soql = 'SELECT ' + String.join(new List<String>(selectFields), ', ')
+					+ ' FROM Unit__c WHERE Id = :unitId LIMIT 1';
+		Unit__c rec = (Unit__c)Database.query(soql);
+
+		for (Schema.FieldSetMember m : fs.getFields()) {
+			String api = m.getFieldPath();
+			if (!fieldMap.containsKey(api)) continue;
+
+			String label = fieldMap.get(api).getDescribe().getLabel();
+			String value;
+
+			if (refRel.containsKey(api)) {
+				SObject parent = rec.getSObject(refRel.get(api));
+				value = (parent != null) ? String.valueOf(parent.get('Name')) : '';
+			} else {
+				Object raw = rec.get(api);
+				value = (raw != null) ? String.valueOf(raw) : '';
+			}
+
+			out.add(new Map<String,String>{
+				'label' => label,
+				'value' => value
+			});
+		}
+
+		return out;
+	}
+    
+}
