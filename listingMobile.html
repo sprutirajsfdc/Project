@@ -1,0 +1,71 @@
+<template>
+  <div class="wrap">
+    <section class="hero">
+      <div class="hero-media"
+           style={heroStyle}
+           role="img"
+           aria-label={heroAriaLabel}
+           ontouchstart={onTouchStart}
+           ontouchend={onTouchEnd}
+           onmousedown={onMouseDown}
+           onmouseup={onMouseUp}
+           onmouseleave={onMouseLeave}>
+        <div class="color-blob"></div>
+
+
+        <div class="hero-copy">
+          <div class="eyebrow">FEATURED LISTING</div>
+          <h1 class="title">{vm.title}</h1>
+          <p class="desc desc--clamp3">{descText}</p>
+        </div>
+
+
+        <section class="facts-panel" aria-label="Listing highlights">
+          <div class="panel-header">Listing Highlights</div>
+          <ul class="facts-grid" role="list">
+            <li class="fact">
+              <div class="fact-title">BROKER LISTING ID</div>
+              <div class="fact-value">{vm.brokerListingId}</div>
+            </li>
+
+
+            <li class="fact">
+              <div class="fact-title">NAME</div>
+              <div class="fact-value">{vm.name}</div>
+            </li>
+
+
+            <li class="fact">
+              <div class="fact-title">COMMUNITY</div>
+              <div class="fact-value">{vm.community}</div>
+            </li>
+
+
+            <li class="fact">
+              <div class="fact-title">SUB COMMUNITY</div>
+              <div class="fact-value">{vm.subCommunity}</div>
+            </li>
+
+
+            <li class="fact">
+              <div class="fact-title">LISTING TYPE</div>
+              <div class="fact-value">{vm.listingType}</div>
+            </li>
+
+
+            <li class="fact">
+              <div class="fact-title">SIZE</div>
+              <div class="fact-value">{vm.size}</div>
+            </li>
+
+            <li class="fact">
+              <div class="fact-title">PRICE</div>
+              <div class="fact-value">AED {vm.price}</div>
+            </li>
+            
+          </ul>
+        </section>
+      </div>
+    </section>
+  </div>
+</template>
