@@ -1,0 +1,361 @@
+/* =========================================================
+   listingMobile.css
+   Updated for UK UAT and Dubai UAT with FreightPro for titles, BentonSans for body,
+   and responsive margins for mobile (max-width: 480px) and tablet (481px-768px).
+   ========================================================= */
+
+/* Root */
+:host {
+  font-family: "BentonSans", -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --sothebys-blue: #0a1f44; /* from inquiryContactBadgeMobile */
+  --slate-200: #cbd2e1;
+  --slate-100: #e6ebf5;
+  --surface: #ffffff;
+  --blob: radial-gradient(140% 100% at 10% 0%, rgba(255,116,53,0.85) 0%, rgba(99, 173, 226, 0.8) 40%, rgba(128, 178, 248, 0.8) 100%);
+  --muted: #6b7280; /* align with --slate-600 */
+  --divider: rgba(110, 89, 217, 0.12);
+  --accentA: #3aa2ed; /* preserve original */
+  --accentB: #eacada; /* preserve original */
+  color: var(--sothebys-blue);
+  display: block;
+  margin-top: -2px;
+}
+
+/* Wrapper */
+.wrap {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Hero Section */
+.hero {
+  padding: 8px 16px 12px; /* align with inquiryContactBadgeMobile */
+}
+
+/* Responsive padding */
+@media screen and (max-width: 480px) {
+  .hero {
+    padding: 4px 8px 6px;
+  }
+}
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .hero {
+    padding: 6px 12px 9px;
+  }
+}
+@media screen and (min-width: 769px) {
+  .hero {
+    padding: 8px 16px 12px;
+  }
+}
+
+/* Hero Media */
+.hero-media {
+  position: relative;
+  width: 100%;
+  min-height: 410px;
+  border-radius: 16px; /* align with inquiryContactBadgeMobile */
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* align with inquiryContactBadgeMobile */
+  background: var(--slate-100);
+  background-image: var(--hero-image);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Color Blob */
+.color-blob {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--blob);
+  mix-blend-mode: multiply;
+  opacity: 0.95;
+  clip-path: ellipse(85% 70% at 15% 5%);
+  z-index: 0;
+}
+
+/* Hero Copy */
+.hero-copy {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  padding: 12px 14px 180px 14px;
+  color: var(--surface);
+  text-shadow: 0 1px 14px rgba(0,0,0,0.35);
+  z-index: 1;
+}
+
+.hero-copy::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 150px;
+  height: 48px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 100%);
+  pointer-events: none;
+}
+
+/* Eyebrow */
+.eyebrow {
+  font-family: "FreightPro", sans-serif; /* title */
+  margin-top: 0;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.9;
+  margin-bottom: 3px;
+}
+
+/* Title */
+.title {
+  font-family: "FreightPro", sans-serif; /* title */
+  font-size: 20px;
+  line-height: 1.15;
+  margin: 0 0 4px 0;
+  font-weight: 800;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Description */
+.desc {
+  font-family: "BentonSans", sans-serif; /* body text */
+  font-size: 12px;
+  line-height: 1.35;
+  max-width: 36ch;
+  opacity: 0.96;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-word;
+  hyphens: auto;
+}
+.desc--clamp3 {
+  -webkit-line-clamp: 3;
+}
+
+/* Facts Panel */
+.facts-panel {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  width: min(92%, 760px);
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(230, 233, 240, 0.64), rgba(230, 233, 240, 0.46));
+  border: 1px solid rgba(255,255,255,0.40);
+  border-radius: 16px; /* align with inquiryContactBadgeMobile */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* align with inquiryContactBadgeMobile */
+  padding: 14px 14px 12px;
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+}
+
+/* Panel Header */
+.panel-header {
+  font-family: "FreightPro", sans-serif; /* title */
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sothebys-blue);
+  text-align: center;
+  margin: 0 0 12px;
+}
+.panel-header::after {
+  content: "";
+  display: block;
+  height: 3px;
+  width: 64px;
+  margin: 8px auto 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accentA), var(--accentB));
+  opacity: 0.85;
+}
+
+/* Facts Grid */
+.facts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0 6px 2px;
+}
+
+/* Fact */
+.fact {
+  position: relative;
+}
+
+/* Fact Title */
+.fact-title {
+  font-family: "FreightPro", sans-serif; /* title */
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: #556070; /* align with original */
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+/* Fact Value */
+.fact-value {
+  font-family: "BentonSans", sans-serif; /* body text */
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--sothebys-blue);
+  line-height: 1.35;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Reduced Transparency */
+@media (prefers-reduced-transparency: reduce) {
+  .facts-panel {
+    background: rgba(236, 238, 242, 0.85);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 480px) {
+  .hero-media {
+    min-height: 380px;
+    border-radius: 12px;
+  }
+  .hero-copy {
+    padding: 10px 12px 160px 12px;
+  }
+  .eyebrow {
+    font-size: 10px;
+  }
+  .title {
+    font-size: 18px;
+  }
+  .desc {
+    font-size: 11px;
+    max-width: 32ch;
+  }
+  .facts-panel {
+    width: min(94%, 700px);
+    padding: 12px 12px 10px;
+    border-radius: 12px;
+  }
+  .panel-header {
+    font-size: 11px;
+  }
+  .panel-header::after {
+    width: 56px;
+  }
+  .facts-grid {
+    gap: 10px 14px;
+    padding: 0 4px 2px;
+  }
+  .fact-title {
+    font-size: 10px;
+  }
+  .fact-value {
+    font-size: 12.5px;
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .hero-media {
+    min-height: 400px;
+    border-radius: 14px;
+  }
+  .hero-copy {
+    padding: 11px 13px 170px 13px;
+  }
+  .eyebrow {
+    font-size: 10.5px;
+  }
+  .title {
+    font-size: 19px;
+  }
+  .desc {
+    font-size: 11.5px;
+    max-width: 34ch;
+  }
+  .facts-panel {
+    width: min(90%, 720px);
+    padding: 13px 13px 11px;
+    border-radius: 14px;
+  }
+  .panel-header {
+    font-size: 11.5px;
+  }
+  .panel-header::after {
+    width: 60px;
+  }
+  .facts-grid {
+    gap: 11px 15px;
+    padding: 0 5px 2px;
+  }
+  .fact-title {
+    font-size: 10.5px;
+  }
+  .fact-value {
+    font-size: 13px;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .hero-media {
+    min-height: 360px;
+    border-radius: 16px;
+  }
+  .hero-copy {
+    padding: 14px 18px 200px 18px;
+  }
+  .eyebrow {
+    font-size: clamp(11px, 2vw, 12px);
+  }
+  .title {
+    font-size: clamp(24px, 3vw, 28px);
+  }
+  .desc {
+    font-size: clamp(13px, 2vw, 14px);
+    max-width: 50ch;
+  }
+  .facts-panel {
+    width: min(86%, 960px);
+    padding: 16px 18px 14px;
+    border-radius: 16px;
+  }
+  .panel-header {
+    font-size: clamp(12px, 2vw, 13px);
+  }
+  .panel-header::after {
+    width: 64px;
+  }
+  .facts-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px 22px;
+    padding: 0 10px 2px;
+  }
+  .facts-grid .fact {
+    padding: 0 12px;
+  }
+  .facts-grid .fact:nth-child(3n+1),
+  .facts-grid .fact:nth-child(3n+2) {
+    border-right: 1px solid var(--divider);
+  }
+  .fact-title {
+    font-size: clamp(11px, 2vw, 12px);
+  }
+  .fact-value {
+    font-size: clamp(13.5px, 2vw, 14.5px);
+  }
+}
