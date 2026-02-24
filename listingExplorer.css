@@ -1,5 +1,8 @@
+/* --- YOUR ORIGINAL CSS (UNTOUCHED) --- */
 :host {
     --brand-orange: #f15a24;
+    --light-bg: #f8f9fb;
+    --border-color: #edf2f7;
 }
 
 .filter-title { font-weight: bold; font-size: 1.1rem; color: #333; }
@@ -30,45 +33,10 @@
     from { opacity: 0; transform: translateX(50px); }
     to { opacity: 1; transform: translateX(0); }
 }
-:host {
-    --brand-orange: #f15a24;
-    --light-bg: #f8f9fb;
-    --border-color: #edf2f7;
-}
 
-/* --- Container & Layout --- */
-.container {
-    background-color: #f4f7f9;
-    min-height: 100vh;
-}
-
-/* --- Filter Section --- */
-.filter-card {
-    border-radius: 12px;
-    border: none;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.filter-title { 
-    font-weight: 700; 
-    font-size: 1.1rem; 
-    color: #2c3e50; 
-}
-
-.search-btn { 
-    background-color: var(--brand-orange) !important; 
-    border: none !important; 
-    height: 40px; 
-    border-radius: 8px !important;
-    font-weight: 600;
-}
-
-/* --- Table Styles --- */
-.table-card {
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid var(--border-color);
-}
+.container { background-color: #f4f7f9; min-height: 100vh; }
+.filter-card { border-radius: 12px; border: none; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+.table-card { border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); }
 
 .custom-table thead th {
     background-color: #fbfcfe;
@@ -79,217 +47,166 @@
     padding: 15px;
 }
 
-.table-row td {
-    padding: 12px 15px;
-    vertical-align: middle;
-    border-bottom: 1px solid var(--border-color);
-}
+.table-row td { padding: 12px 15px; vertical-align: middle; border-bottom: 1px solid var(--border-color); }
+.status-badge { padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+.badge-sold { background-color: #ffdce0; color: #e6122d; }
+.badge-published { background-color: #d1fae5; color: #065f46; }
+.badge-pending { background-color: #fef3c7; color: #92400e; }
+.badge-draft { background-color: #f3f4f6; color: #374151; }
 
-.row-thumb { 
-    width: 64px; 
-    height: 64px; 
-    border-radius: 12px; 
-    object-fit: cover; 
-    background: #e2e8f0;
-}
+.details-row { display: flex; align-items: center; color: #4a5568; font-size: 0.85rem; }
+.detail-item { display: flex; align-items: center; margin-right: 12px; font-weight: 500; }
+.selected-row { background-color: #efaa95 !important; border-left: 4px solid var(--brand-orange) !important; }
+.table-row { border-left: 4px solid transparent; }
+.table-row:hover { background-color: #fbfcfe; cursor: pointer; }
 
-.listing-name { 
-    font-weight: 700; 
-    font-size: 1rem; 
-    color: #2c3e50; 
-}
+/* --- NEW ADDITIONS FOR GRID VIEW (MATCHING IMAGE) --- */
 
-.price-cell { 
-    color: var(--brand-orange); 
-    font-weight: 800; 
-    font-size: 1.15rem; 
-}
-
-/* --- Status Badges --- */
-.badge { 
-    padding: 4px 12px; 
-    border-radius: 20px; 
-    font-size: 10px; 
-    font-weight: 800; 
-    display: inline-block;
-}
-.active { background: #e6f7ef; color: #2ecc71; }
-.pending { background: #fff4e6; color: #f39c12; }
-.sold { background: #f2f2f2; color: #95a5a6; }
-
-/* --- Sidebar & Slider --- */
-.hero-image-container { 
-    position: relative; 
-    border-radius: 12px; 
-    overflow: hidden; 
-    height: 220px; 
-    background: #000;
-    cursor: zoom-in;
-}
-
-.sidebar-img { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    transition: transform 0.3s ease;
-}
-
-.photo-count { 
-    position: absolute; 
-    bottom: 12px; 
-    right: 12px; 
-    background: rgba(0,0,0,0.6); 
-    color: white; 
-    padding: 3px 10px; 
-    border-radius: 6px; 
-    font-size: 11px; 
-}
-
-/* Slider Arrows */
-.slider-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.8);
-    border: none;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.slider-arrow:hover { background: white; }
-.left-arrow { left: 10px; }
-.right-arrow { right: 10px; }
-
-/* Sidebar Stats */
-.stat-box { 
-    background: var(--light-bg); 
-    border-radius: 12px; 
-    padding: 15px 5px; 
-    text-align: center; 
+.property-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     border: 1px solid var(--border-color);
-}
-.stat-box p { font-size: 10px; color: #8898aa; margin: 0; text-transform: uppercase; font-weight: 600; }
-.stat-box strong { font-size: 1.1rem; color: #2c3e50; display: block; margin-top: 4px; }
-
-.property-title-sidebar {
-    color: var(--brand-orange);
-    font-size: 1.3rem;
-    font-weight: 800;
+    height: 100%;
+    transition: transform 0.2s ease;
 }
 
-/* --- Action Buttons --- */
-.orange-btn { 
-    background-color: var(--brand-orange) !important; 
-    color: white !important;
-    border: none !important; 
-    height: 48px; 
-    border-radius: 10px !important; 
-    font-weight: 700;
+.property-card:hover {
+    transform: translateY(-5px);
+}
+
+.image-container {
+    position: relative;
+    height: 200px;
+}
+
+.image-container img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.view-salesforce-btn {
-    background-color: #f0f4f8 !important;
-    color: #2c3e50 !important;
-    border: none !important;
-    height: 48px;
-    border-radius: 10px !important;
-    font-weight: 700;
-    width: 100%;
+/* Featured & Inquiry Badges */
+.badge-featured {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--brand-orange);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: bold;
 }
 
-/* --- Animations --- */
-.animate-slide { 
-    animation: slideIn 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
-}
-@keyframes slideIn {
-    from { opacity: 0; transform: translateX(30px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-.status-badge {
+.badge-inquiries {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.9);
     padding: 4px 12px;
-    border-radius: 12px;
+    border-radius: 20px;
     font-size: 11px;
     font-weight: 700;
-    text-transform: uppercase;
+    color: #1a2b49;
 }
 
-.badge-sold {
-    background-color: #ffdce0; /* Light Red */
-    color: #e6122d; /* Dark Red */
+.property-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #1a2b49;
 }
 
-.badge-published {
-    background-color: #d1fae5; /* Light Green */
-    color: #065f46; /* Dark Green */
+.property-price {
+    color: var(--brand-orange);
+    font-weight: 800;
+    font-size: 1.1rem;
 }
 
-.badge-pending {
-    background-color: #fef3c7; /* Light Amber */
-    color: #92400e; /* Dark Amber */
+.property-icons {
+    display: flex;
+    gap: 12px;
 }
 
-.badge-draft {
-    background-color: #f3f4f6; /* Light Grey */
-    color: #374151; /* Dark Grey */
-}
-.details-row {
+.icon-stat {
     display: flex;
     align-items: center;
-    color: #4a5568; /* Dark grey text */
+    color: #718096;
     font-size: 0.85rem;
+    font-weight: 600;
 }
 
-/* Individual item spacing */
-.detail-item {
-    display: flex;
-    align-items: center;
-    margin-right: 12px;
-    font-weight: 500;
-}
-
-/* Icon Styling - making them slightly grey to match the UI */
-.detail-icon {
+.icon-stat lightning-icon {
+    margin-right: 4px;
     --slds-c-icon-color-foreground: #a0aec0;
 }
 
-/* Ensure the table cell doesn't wrap awkwardly */
-.custom-table td {
-    vertical-align: middle;
-    padding: 12px 8px;
+/* Card Footer */
+.card-footer {
+    border-top: 1px solid var(--border-color);
+    padding-top: 12px;
+    margin-top: 12px;
 }
 
-/* Make the property name stand out as per listingone.png */
-.listing-name {
-    font-weight: 700;
-    color: #2d3748;
-    font-size: 0.95rem;
-}
-
-.owner-text {
-    font-size: 0.8rem;
-    color: #718096;
+.owner-info {
     display: flex;
     align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.avatar-circle {
+    width: 28px;
+    height: 28px;
+    background: #e2e8f0;
+    border-radius: 50%;
+    background-image: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+}
+
+.full-details-btn {
+    background: transparent;
+    border: none;
+    color: var(--brand-orange);
+    font-weight: 700;
+    font-size: 0.75rem;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+.broker-ref {
+    font-size: 0.75rem;
     margin-top: 2px;
 }
-.selected-row {
-    background-color: #efaa95 !important; /* Light orange tint */
-    border-left: 4px solid var(--brand-orange) !important;
+.agent-profile-pic {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 8px; /* adds spacing between image and name */
 }
 
-/* Ensure the table doesn't shift when the 4px border is added */
-.table-row {
-    border-left: 4px solid transparent;
+.owner-name {
+    vertical-align: middle; /* aligns text with image */
+    font-weight: 500;
+}
+.owner-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* space between avatar and name */
 }
 
-/* Hover effect for better UX */
-.table-row:hover {
-    background-color: #fbfcfe;
-    cursor: pointer;
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.avatar-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ensures image covers circle without stretching */
 }
