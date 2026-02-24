@@ -1,0 +1,199 @@
+<template>
+  <div class="inventory-container">
+
+    <!-- 🔹 Hero Section -->
+    <div class="image-section animate">
+      <div class="overlay">
+        <h1 class="title">Inventory Management</h1>
+        <p class="subtitle">
+          Track available and booked units<br />
+          across all projects with filters &amp; tables.
+        </p>
+      </div>
+    </div>
+
+    <!-- 📊 Status Tiles -->
+    <div class="status-wrapper">
+      <div class={statusBadgesClass}>
+        <template for:each={visibleStatusCounts} for:item="tile">
+          <div class="status-badge" key={tile.label}>
+            <div class="status-label">{tile.label}</div>
+            <div class="status-count">{tile.count}</div>
+            <div class="status-price">{tile.totalPriceFormatted}</div>
+          </div>
+        </template>
+
+        <!-- grand-total badge -->
+        <div class="status-badge total-badge">
+          <div class="status-label">TOTAL&nbsp;UNITS</div>
+          <div class="status-count">{totalUnits}</div>
+          <div class="status-price">{formattedTotalSalesPrice}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔍 Search Button -->
+    <div class="search-button-wrapper">
+      <button class="search-units-tile-btn" onclick={togglePanel}>
+        SEARCH&nbsp;UNITS
+      </button>
+    </div>
+
+    <!-- 🔽 Filter Modal -->
+    <template if:true={showFilters}>
+      <section class="modal-backdrop">
+        <div class="modal-container">
+          <h2 class="modal-title">Filter Units</h2>
+          <p class="filter-note">
+            * PLEASE SELECT EITHER PROJECT OR DEVELOPER TO FILTER RESULTS.
+          </p>
+
+          <div class="modal-filters">
+
+            <!-- Project -->
+            <div class="apple-tile-wrapper apple-tile">
+              <lightning-combobox
+                name="project"
+                label="Project"
+                value={selectedProject}
+                options={projectOptions}
+                onchange={handleProjectChange}>
+              </lightning-combobox>
+            </div>
+
+            <!-- Developer -->
+            <div class="apple-tile-wrapper apple-tile">
+              <lightning-combobox
+                name="developer"
+                label="Developer"
+                value={selectedDeveloper}
+                options={developerOptions}
+                onchange={handleDeveloperChange}>
+              </lightning-combobox>
+            </div>
+
+            <!-- Location -->
+            <div class="apple-tile-wrapper apple-tile">
+              <lightning-combobox
+                name="location"
+                label="Location"
+                value={selectedLocation}
+                options={locationOptions}
+                onchange={handleLocationChange}>
+              </lightning-combobox>
+            </div>
+
+            <!-- Dynamic field-set filters -->
+<template for:each={filterFields} for:item="field">
+  <div class="apple-tile-wrapper apple-tile" key={field.apiName}>
+
+    <!-- Picklist -->
+    <template if:true={field.isPicklist}>
+      <lightning-combobox
+        label={field.label}
+        value={field.value}
+        data-field={field.apiName}
+        options={field.options}
+        onchange={handleDynamicInput}>
+      </lightning-combobox>
+    </template>
+
+    <!-- Text/Number -->
+    <template if:false={field.isPicklist}>
+      <lightning-input
+        type={field.inputType}
+        label={field.label}
+        value={field.value}
+        data-field={field.apiName}
+        onchange={handleDynamicInput}>
+      </lightning-input>
+    </template>
+
+  </div>
+</template>
+
+          </div>
+
+          <div class="modal-actions">
+            <button class="btn cancel" onclick={closeFilterPanel}>Cancel</button>
+            <button class="btn reset" onclick={resetFilters}>Reset</button>
+            <button class="btn primary" onclick={filterAndClosePanel} disabled={searchDisabled}>Search</button>
+          </div>
+        </div>
+      </section>
+    </template>
+
+    <!-- 🚫 No-units message -->
+    <template if:true={showNoUnitsMessage}>
+      <div class="no-data">
+        <span class="no-data-icon">🚫</span>
+        <span class="no-data-text">
+          On this selected project, there is no Unit. Please select another.
+        </span>
+      </div>
+    </template>
+
+    <!-- 🏘️ Unit Listing -->
+    <template if:true={unitRecords.length}>
+      <div class="unit-list">
+        <template for:each={unitRecords} for:item="unit">
+          <div class="unit-card" key={unit.Id} data-unit-id={unit.Id} data-unit-name={unit.Name}
+               onclick={handleUnitClick}>
+
+            <!-- 🔖 Status Pill Top-Right -->
+            <div class="unit-status-tag {getStatusClass(unit.Status__c)}">
+              {unit.Status__c}
+            </div>
+
+            <!-- 🏠 Unit Name Centered -->
+            <div class="unit-name" title={unit.Name}>{unit.Name}</div>
+
+            <!-- 🖼 Image and Info Grid -->
+            <div class="unit-content">
+              <!-- Image -->
+              <div class="unit-img">
+                <img src={unit.imageUrl} alt="Unit Image" />
+              </div>
+
+              <!-- Info Grid -->
+              <div class="unit-info-grid">
+                <div class="info-row">
+                  <div class="label-value">Project: {unit.projectName}</div>
+                  <div class="label-value">Unit#: {unit.Unit_Number__c}</div>
+                </div>
+                <div class="info-row">
+                  <div class="label-value">Bedrooms: {unit.CD_Bedrooms__c}</div>
+                  <div class="label-value">Price: AED {unit.CD_Sales_Price__c}</div>
+                </div>
+                <div class="info-row">
+                  <div class="label-value">Area: {unit.formattedArea}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </template>
+
+    <!-- 🪟 Unit Detail Modal -->
+    <template if:true={isUnitModalOpen}>
+      <section class="modal-backdrop unit-detail-modal">
+        <div class="modal-container">
+          <h2 class="modal-title">{modalUnitName}</h2>
+          <div class="modal-fields-list">
+            <template for:each={modalFields} for:item="field">
+              <div class="field-tile" key={field.label}>
+                <div class="field-label">{field.label}</div>
+                <div class="field-value">{field.value}</div>
+              </div>
+            </template>
+          </div>
+          <div class="modal-actions">
+            <button class="btn cancel" onclick={closeUnitModal}>Close</button>
+          </div>
+        </div>
+      </section>
+    </template>
+
+  </div>
+</template>
