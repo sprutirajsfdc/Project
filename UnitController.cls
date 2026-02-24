@@ -1,0 +1,230 @@
+/**
+* @File Name : UnitController.cls
+* @Description :
+* @Author :
+* @Last Modified By :
+* @Last Modified On : April 12, 2025
+* @Modification Log :
+*==============================================================================
+* Ver | Date | Author | Modification
+*==============================================================================
+* 1.0 | April 12, 2025 |   | Initial Version
+* PLEASE DO NOT CHANGE ANY ONE SINGLE LINE CODE
+**/
+
+public with sharing class UnitController {
+    
+    // ✅ Fetch only Projects with Type = 'Exclusive'
+    @AuraEnabled(cacheable=true)
+    public static List<Project__c> getExclusiveProjects() {
+        return [ Select id, Name,Developer_Name__c,Location__c FROM Project__c WHERE offboarded__c != true ORDER BY Name ASC ]; 
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<String> getDeveloper() {
+        List<AggregateResult> results = [
+            SELECT Developer_Name__c 
+            FROM Project__c 
+            WHERE Developer_Name__c != null AND offboarded__c != true
+            GROUP BY Developer_Name__c 
+            ORDER BY Developer_Name__c ASC
+        ];
+        
+        List<String> developers = new List<String>();
+        for (AggregateResult ar : results) {
+            developers.add((String)ar.get('Developer_Name__c'));
+        }
+        return developers;
+    }
+    
+    @AuraEnabled(cacheable=true)
+    public static List<String> getLocation() {
+        List<AggregateResult> results = [
+            SELECT Location__c 
+            FROM Project__c 
+            WHERE Location__c != null AND offboarded__c != true
+            GROUP BY Location__c 
+            ORDER BY Location__c ASC
+        ];
+        
+        List<String> locations = new List<String>();
+        for (AggregateResult ar : results) {
+            locations.add((String)ar.get('Location__c'));
+        }
+        return locations;
+    }
+    
+    // ✅ Fetch Unit records using Field Set + Filters + Pagination
+    @AuraEnabled(cacheable=true)
+    public static List<List<SObject>> getUnits(string projectId, Map<String, String> filters, Integer pageSize, Integer pageNumber) {
+        system.debug('filters---'+filters);
+        String query = 'SELECT Id, Name,SQM__c,Space__c  ';
+        
+        // Add fields from field set
+        for (Schema.FieldSetMember f : SObjectType.Unit__c.FieldSets.Unit_Table.getFields()) {
+            if (f.getFieldPath() != 'Name') {
+                query += ', ' + f.getFieldPath();
+            }
+        }
+        
+        List<String> conditions = new List<String>();
+        query += ' FROM Unit__c ' ;
+
+        conditions.add('(Project__r.Offboarded__c != true)');
+
+        if (String.isNotBlank(projectId)) {
+            conditions.add('Project__c = :projectId');
+        }
+
+        if (filters.containsKey('Developer_Name__c')) {
+            string devName = filters.get('Developer_Name__c');
+            if(devName != 'All') {
+                conditions.add('Project__r.Developer_Name__c'+ ' = \'' + String.escapeSingleQuotes(devName) + '\'');
+            }
+        }
+        
+        // Add dynamic filters (ensure valid fields)
+        Map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.Unit__c.fields.getMap();
+
+        for (String field : filters.keySet()) {
+            String value = filters.get(field);
+            system.debug('value--'+value);
+            // Check if the field exists in Unit__c
+            if (fieldMap.containsKey(field) && String.isNotBlank(value)) {
+                if(field !='Project__c'){
+                    if(value != 'All'){
+                        conditions.add(field + ' LIKE \'%' + value + '%\'');
+                    }
+                }
+            } else {
+                if (new Set<String>{'Location__c'}.contains(field) && value != 'All') {
+                    conditions.add('Project__r.' + field + ' = \'' + String.escapeSingleQuotes(value) + '\'');
+                }else{
+                    // Log invalid filter field (optional)
+                    System.debug('Invalid filter field or value: ' + field + ' = ' + value);
+                }
+            }
+        }
+
+        if (!conditions.isEmpty()) {
+            query += ' WHERE ' + String.join(conditions, ' AND ');
+        }
+
+        List<List<SObject>> LolUnits;
+        system.debug('query--'+query);
+        List<SObject> listAllUnits = Database.query(query);
+        if(listAllUnits.size() > 0 ){
+            LolUnits = new List<List<SObject>>();
+            LolUnits.add(listAllUnits);
+            // Add pagination
+            Integer offset = (pageNumber - 1) * pageSize;
+            query += ' LIMIT :pageSize OFFSET :offset';
+            LolUnits.add(Database.query(query));
+            //system.debug(Database.query(query));
+        }
+        
+        return LolUnits;
+    }
+    @AuraEnabled(cacheable=true)
+    public static List<Map<String, String>> getFieldSetFieldsWithLabel() {
+        List<Map<String, String>> fieldList = new List<Map<String, String>>();
+        Map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.Unit__c.fields.getMap();
+        
+        for (Schema.FieldSetMember f : SObjectType.Unit__c.FieldSets.Unit_Table.getFields()) {
+            if (!fieldMap.containsKey(f.getFieldPath())) continue;
+            
+            Schema.DescribeFieldResult describe = fieldMap.get(f.getFieldPath()).getDescribe();
+            
+            Map<String, String> fieldInfo = new Map<String, String>{
+                'apiName' => f.getFieldPath(),
+                    'label' => describe.getLabel()
+                    };
+                        
+                        fieldList.add(fieldInfo);
+        }
+        
+        return fieldList;
+    }
+    
+    @AuraEnabled(cacheable=true)
+    public static List<ComboOption> getPicklistValues(String objectApiName, String fieldApiName) {
+        Map<String, Schema.SObjectType> gd = Schema.getGlobalDescribe();
+        Schema.SObjectType sobjType = gd.get(objectApiName);
+        Schema.DescribeSObjectResult describeSObjectResult = sobjType.getDescribe();
+        Schema.DescribeFieldResult fieldResult = describeSObjectResult.fields.getMap().get(fieldApiName).getDescribe();
+        
+        List<ComboOption> options = new List<ComboOption>();
+        for (Schema.PicklistEntry pe : fieldResult.getPicklistValues()) {
+            options.add(new ComboOption(pe.getLabel(), pe.getValue()));
+        }
+        return options;
+    }
+    
+    public class ComboOption {
+        @AuraEnabled public String label {get; set;}
+        @AuraEnabled public String value {get; set;}
+        
+        public ComboOption(String label, String value) {
+            this.label = label;
+            this.value = value;
+        }
+    }
+     @AuraEnabled(cacheable=true)
+    public static String getUserProfileName() {
+        return [SELECT Profile.Name FROM User WHERE Id = :UserInfo.getUserId()].Profile.Name;
+    }
+@AuraEnabled(cacheable=true)
+public static Integer getTotalUnitCount(Id projectId, String developer, String location) {
+    List<String> conditions = new List<String>();
+
+    conditions.add('(Project__r.Offboarded__c != true)');
+
+    if (projectId != null && String.valueOf(projectId).trim() != 'All') {
+        conditions.add('Project__c = :projectId');
+    }
+
+    if (!String.isBlank(developer) && developer.trim() != 'All') {
+        conditions.add('Project__r.Developer_Name__c = :developer');
+    }
+
+    if (!String.isBlank(location) && location.trim() != 'All') {
+        conditions.add('Project__r.Location__c = :location');
+    }
+
+    String query = 'SELECT COUNT() FROM Unit__c';
+    if (!conditions.isEmpty()) {
+        query += ' WHERE ' + String.join(conditions, ' AND ');
+    }
+
+    return Database.countQuery(query);
+}
+
+@AuraEnabled(cacheable=true)
+public static Decimal getTotalSAR(Id projectId, String developer, String location) {
+    List<String> conditions = new List<String>();
+
+  
+    conditions.add('(Project__r.Offboarded__c != true)');
+
+    if (projectId != null && String.valueOf(projectId).trim() != 'All') {
+        conditions.add('Project__c = :projectId');
+    }
+
+    if (!String.isBlank(developer) && developer.trim() != 'All') {
+        conditions.add('Project__r.Developer_Name__c = :developer');
+    }
+
+    if (!String.isBlank(location) && location.trim() != 'All') {
+        conditions.add('Project__r.Location__c = :location');
+    }
+
+    String query = 'SELECT SUM(CD_Sales_Price__c) total FROM Unit__c';
+    if (!conditions.isEmpty()) {
+        query += ' WHERE ' + String.join(conditions, ' AND ');
+    }
+
+    AggregateResult result = (AggregateResult)Database.query(query);
+    return (Decimal)(result.get('total') != null ? result.get('total') : 0);
+}
+
+}
