@@ -239,4 +239,23 @@ public static List<Property_Media__c> getAllMediaForListing(Id listingId) {
         ORDER BY Sort_on_Website__c ASC
     ];
 }
+@AuraEnabled(cacheable=true)
+    public static Map<Id, String> getOwnerProfileUrls(List<Id> ownerIds) {
+        Map<Id, String> result = new Map<Id, String>();
+
+        if (ownerIds == null || ownerIds.isEmpty()) {
+            return result;
+        }
+
+        // Query only users
+        for (User u : [
+            SELECT Id, AWS_Profile_Url__c
+            FROM User
+            WHERE Id IN :ownerIds
+        ]) {
+            result.put(u.Id, u.AWS_Profile_Url__c);
+        }
+
+        return result;
+    }
 }
