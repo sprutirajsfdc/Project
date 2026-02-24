@@ -1,0 +1,695 @@
+/* ===========================================
+   4-COLUMN LAYOUT → FILTER + 3 CARD COLUMNS
+=========================================== */
+
+/* ========== NEW INQUIRY CARD DESIGN (MATCHED TO UI) ========== */
+
+
+/* ==============================
+   FILTER BUTTONS - UI MATCH
+============================== */
+      /* Force styling inside Shadow DOM */
+
+
+      
+
+.view-switch-row {
+    display: flex;
+    
+    margin-bottom: 12px;
+}
+
+
+/* COMMON STYLE */
+
+/* ===========================================
+   ✨ UPGRADED VERSION OF YOUR OLD DATATABLE CSS
+=========================================== */
+
+/* Sticky table header */
+.slds-table thead th {
+    position: sticky !important;
+    top: 0;
+    z-index: 4;
+    background: linear-gradient(180deg, #f9fafe, #eef1f7) !important;
+    color: #0B1E3F !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    padding: 14px 16px !important;
+    border-bottom: 2px solid #d7ddea !important;
+}
+
+/* Body cells */
+.slds-table tbody td {
+    background: #ffffff !important;
+    border-bottom: 1px solid #eef1f6 !important;
+    padding: 12px 16px !important;
+    font-size: 13px !important;
+    color: #2c2c2c !important;
+    transition: background 0.15s ease;
+}
+
+/* Zebra row effect */
+.slds-table tbody tr:nth-child(even) > td {
+    background: #fafbfd !important;
+}
+
+/* Hover highlight */
+.slds-table tbody tr:hover > td {
+    background: #e8f1ff !important;
+    cursor: pointer;
+}
+
+/* Round top corners */
+.slds-table {
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    border: 1px solid #e5e8ef !important;
+}
+
+/* Inline row action button */
+.slds-button_icon-border-filled {
+    background: #0B1E3F !important;
+    border: 1px solid #0B1E3F !important;
+    color: #fff !important;
+    border-radius: 6px !important;
+    padding: 4px;
+}
+
+.slds-button_icon-border-filled:hover {
+    background: #0A1A38 !important;
+    border-color: #0A1A38 !important;
+}
+
+/* Fix cell layout */
+.table-wrapper .slds-table {
+    table-layout: fixed !important;
+}
+
+/* Fit table width */
+lightning-datatable {
+    width: 100% !important;
+}
+
+
+
+.filter-btn-html {
+    width: 100%;
+    height: 48px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* RESET BUTTON */
+.reset-btn {
+    background: #ffffff;
+    border: 1px solid #C6C6C6;
+    color: #000000;
+}
+
+.reset-btn:hover {
+    background: #f4f4f4;
+}
+
+/* SEARCH BUTTON */
+.search-btn {
+    background: #0B1E3F;
+    border: none;
+    color: #ffffff;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.12);
+}
+
+.search-btn:hover {
+    background: #0A1A38;
+}
+
+
+      
+/* ==============================
+   FILTER BUTTONS - HTML BUTTONS
+============================== */
+
+/* Filter actions container */
+.filter-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 16px;
+    width: 100%;
+}
+
+/* COMMON STYLE FOR ALL FILTER BUTTONS */
+.filter-btn-html {
+    width: 100%;
+    height: 48px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+}
+
+/* RESET BUTTON */
+.filter-actions .reset-btn {
+    background: #ffffff;
+    border: 1px solid #C6C6C6 !important;
+    color: #000000;
+}
+
+.filter-actions .reset-btn:hover {
+    background: #f4f4f4;
+}
+
+/* SEARCH BUTTON */
+.filter-actions .search-btn {
+    background: #0B1E3F;
+    border: 1px solid #0B1E3F !important;
+    color: #ffffff;
+    box-shadow: 0px 3px 10px rgba(0,0,0,0.12);
+}
+
+.filter-actions .search-btn:hover {
+    background: #0A1A38;
+    border-color: #0A1A38 !important;
+}
+
+
+
+.tag-container {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+
+/* OWNER + DATE ROW */
+.top-meta-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2px;
+}
+
+.owner-text {
+    font-size: 12px;
+    color: #7c7c7c;
+    font-style: italic;
+}
+
+.meta-date {
+    font-size: 12px;
+    color: #7c7c7c;
+}
+
+/* TAGS STYLING */
+.tag-row {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+      overflow: visible;
+}
+
+.tag {
+    background: #e9ecef;
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #333;
+    font-weight: 600;
+     white-space: nowrap;
+}
+
+
+/* OWNER ROW - EXACT MATCH WITH PROVIDED UI */
+.owner-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -4px;
+    margin-bottom: 6px;
+}
+
+.owner-left {
+    display: flex;
+    gap: 4px;
+}
+
+.owner-label,
+.owner-value {
+    font-size: 11px;
+    color: #707070;
+    font-style: italic;
+}
+
+.owner-date {
+    font-size: 11px;
+    color: #9a9a9a;
+}
+
+
+
+.status-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.status-badge::before {
+    content: "";
+    width: 4px;
+    height: 4px;
+    background: var(--dot-color, red);
+    border-radius: 50%;
+    font-weight: normal !important;
+}
+
+
+.status-badge {
+    position: absolute;
+    top: 8px;
+    right: 14px;
+    padding: 4px 8px;
+    border-radius: 14px;
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+/* Define colors for each status */
+.inquiry-card .status-badge.New {
+    background-color: #fff3cd !important; /* Light yellow */
+    color: #856404 !important; /* Dark yellow text */
+}
+
+.inquiry-card .status-badge.In-Progress {
+    background-color: #fff3cd !important; /* Light yellow */
+    color: #856404 !important; /* Dark yellow text */
+}
+
+.inquiry-card .status-badge.Closed {
+    background-color: #fff3cd !important; /* Light yellow */
+    color: #856404 !important; /* Dark yellow text */
+}
+
+.inquiry-card .status-badge.Won {
+    background-color: #d4edda !important; /* Light green */
+    color: #155724 !important; /* Dark green text */
+}
+
+.inquiry-card .status-badge.Lost {
+    background-color: #f8d7da !important; /* Light red */
+    color: #721c24 !important; /* Dark red text */
+}
+
+.inquiry-card .status-badge.Pending {
+    background-color: #fff3cd !important; /* Light yellow */
+    color: #856404 !important; /* Dark yellow text */
+}
+
+/* Status date colors */
+.inquiry-card .status-date.New { color: #856404 !important; }
+.inquiry-card .status-date.In-Progress { color: #856404 !important; }
+.inquiry-card .status-date.Closed { color: #856404 !important; }
+.inquiry-card .status-date.Won { color: #155724 !important; }
+.inquiry-card .status-date.Lost { color: #721c24 !important; }
+.inquiry-card .status-date.Pending { color: #856404 !important; }   
+
+/* STATUS DATE */
+.status-date {
+    position: absolute;
+    top: 38px;
+    right: 16px;
+    font-size: 11px;
+    color:  #D64045;
+}
+
+
+/* ensure parent card can position children */
+
+
+
+/* Section wrapper */
+.inquiry-section {
+    padding: 6px 0;
+}
+
+/* Horizontal row structure */
+.row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    white-space: nowrap;
+}
+
+/* Left side label */
+.row-label {
+    width: 54px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #7c7c7c;
+}
+
+/* Right side value */
+.row-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0B1E3F;
+    white-space: nowrap;
+}
+
+/* Allow location to wrap like sample */
+.row-value.multiline {
+    white-space: normal !important;
+    line-height: 1.25rem;
+}
+
+/* Divider line between sections */
+.separator {
+    width: 100%;
+    border-bottom: 1px solid #e4e4e4;
+    margin: 8px 0;
+}
+
+
+
+.inquiry-card {
+    position: relative; /* REQUIRED for corner badge */
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #DFDFDF;
+    padding: 18px 8px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 190px;
+    transition: all 0.18s ease-in-out;
+    cursor: pointer;
+}
+
+
+.inquiry-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* Header */
+.inquiry-card__hdr {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.inquiry-card__title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #0B1E3F;
+    margin: 0;
+}
+
+.inquiry-card__date {
+    font-size: 11px;
+    font-weight: 500;
+    color: #C7365F; /* Light Red Accent */
+}
+
+/* Body fields */
+.info-row {
+    display: flex;
+    flex-direction: row; /* was column */
+    gap: 6px; /* add spacing so text doesn’t touch */
+    white-space: nowrap; /* prevent wrapping */
+    
+}
+
+
+.info-label {
+    font-size: 11px;
+    color: #656565;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.info-value {
+    font-size: 13px;
+    font-weight: 700;
+    color: #0B1E3F;
+}
+
+
+
+.four-column {
+    display: grid;
+    grid-template-columns: 400px 1fr 1fr 1fr;
+    gap: 20px;
+    padding: 18px;
+}
+
+/* LEFT FILTER PANEL */
+.left-filter {
+    height: 100vh;
+    overflow-y: auto;
+    background: white;
+    padding-right: 8px;
+}
+
+/* RIGHT CARD AREA */
+.right-cards {
+    grid-column: span 3;
+     padding-bottom: 40px; /* prevents pagination from hiding */
+}
+
+/* ===========================================
+   FILTER PANEL STYLE
+=========================================== */
+.panel.panel--glass.panel--glow {
+    background: #ffffff !important;
+    border: 1px solid #e5e5e5 !important;
+    border-radius: 10px !important;
+    padding: 18px !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+/* GRID: ONE COLUMN ALWAYS */
+.grid--filters {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+}
+
+/* FIELD WRAPPER */
+.field {
+    background: #fff !important;
+    border: 1px solid #dcdcdc !important;
+    border-radius: 6px !important;
+    padding: 12px !important;
+}
+
+/* 2-column rows (Price, Beds, Dates) */
+.field.two {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+}
+
+@media(max-width: 480px) {
+    .field.two {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* ===========================================
+   INPUTS — HEIGHT 56PX + SQUARE
+=========================================== */
+lightning-input input,
+lightning-combobox .slds-input,
+lightning-combobox .slds-combobox__input {
+    height: 56px !important;
+    border-radius: 4px !important;
+    border: 1px solid #cfcfcf !important;
+    font-size: 14px !important;
+    padding-left: 12px !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+}
+
+/* LABEL STYLE — Bold */
+.slds-form-element__label {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #0B1E3F !important;
+    margin-bottom: 6px !important;
+}
+
+/* DATE PICKER ICON */
+.slds-input__icon {
+    height: 56px !important;
+    width: 40px !important;
+}
+
+/* ===========================================
+   TOKEN SELECT (Community / Sub Community)
+=========================================== */
+.tokenselect__box {
+    min-height: 56px !important;
+    border: 1px solid #cfcfcf !important;
+    border-radius: 4px !important;
+    padding: 6px !important;
+    background: #fff !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+}
+
+.tokenselect__input {
+    border: none !important;
+    height: 42px !important;
+    background: transparent !important;
+    font-size: 14px !important;
+    flex-grow: 1;
+}
+
+.dropdown {
+    border: 1px solid #cfcfcf !important;
+    border-radius: 4px !important;
+    background: white !important;
+}
+
+.token {
+    background: #f2f4f7;
+    border: 1px solid #ddd;
+    border-radius: 18px;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+/* ===========================================
+   HEADER (Left Filter Column Title)
+=========================================== */
+.left-filter .hdr {
+    width: 100%;
+    background: #ffffff !important;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 12px;
+}
+
+.left-filter .hdr__inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 10px;
+}
+
+.left-filter .hdr__title {
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    text-align: center !important;
+    color: #0B1E3F;
+}
+
+.page-btn-html {
+    padding: 10px 22px;
+    background: #ffffff;
+    border: 1px solid #C6C6C6;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.page-btn-html:hover:not([disabled]) {
+    background: #f4f4f4;
+}
+
+.page-btn-html:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+
+.card-grid-3col {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(330px, 1fr)); /* increased width */
+    gap: 13px;
+    margin-top: 16px;
+}
+
+.card-box {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 16px;
+    background: #fff;
+    min-height: 220px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.label {
+    font-size: 12px;
+    color: #666;
+    margin-top: 6px;
+    font-weight: 600;
+}
+
+/* ===========================================
+   PAGINATION 3-COLUMN
+=========================================== */
+.pagination-3col {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    margin-top: 24px;
+    gap: 12px;
+    align-items: center;
+}
+
+.page-btn {
+    padding: 10px 18px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.page-info {
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* ===========================================
+   RESPONSIVE
+=========================================== */
+@media (max-width: 900px) {
+    .four-column {
+        grid-template-columns: 1fr;
+    }
+    .right-cards {
+        grid-column: span 1;
+    }
+    .card-grid-3col {
+        grid-template-columns: 1fr;
+    }
+}
