@@ -1,0 +1,90 @@
+:host {
+    --brand-blue: #0070d2;
+    --text-dark: #16325c;
+    --text-light: #54698d;
+    --border-gray: #dddbda;
+}
+
+.container {
+    background-color: #f4f6f9; /* The exact light gray background */
+    min-height: 100vh;
+}
+
+.agent-card {
+    background: #ffffff;
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+    padding: 24px 16px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%;
+}
+
+.avatar-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.profile-img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #eef1f6;
+}
+
+.agent-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.agent-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--brand-blue);
+    margin-top: 4px;
+}
+
+.contact-info p {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 4px;
+}
+
+.icon-gray {
+    --slds-c-icon-color-foreground: #706e6b;
+}
+
+.view-details-btn {
+    width: 100%;
+    --slds-c-button-text-color: var(--brand-blue);
+    --slds-c-button-border-color: #c9c7c5;
+}
+
+/* Pagination Styling */
+.pagination-bar button {
+    background: transparent;
+    border: none;
+    padding: 8px 14px;
+    margin: 0 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    border-radius: 4px;
+}
+
+.pagination-bar button.active {
+    background-color: var(--brand-blue);
+    color: white;
+}
+
+.nav-arrow {
+    font-size: 1.5rem !important;
+    line-height: 1;
+}
+
+.search-input {
+    width: 250px;
+}

@@ -1,0 +1,155 @@
+/* Container Background */
+.detail-wrapper {
+    background-color: #f3f4f6;
+    min-height: 100vh;
+}
+
+.bg-white {
+    background: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+}
+
+/* Header Styles */
+.main-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.relative { position: relative; }
+
+.online-dot {
+    width: 12px;
+    height: 12px;
+    background-color: #22c55e; /* Green dot */
+    border: 2px solid #fff;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 4px;
+    right: 0;
+}
+
+.agent-name-bold {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.role-text {
+    color: #6b7280;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+}
+
+.contact-links {
+    margin-top: 4px;
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+/* Metric Boxes */
+.metric-box {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: left;
+}
+
+.m-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7280;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.m-value {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.up {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #10b981; /* Trend green */
+    margin-left: 0.5rem;
+}
+
+/* Listing Tabs */
+.listing-container {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1rem;
+}
+
+.listing-header {
+    display: flex;
+    gap: 2rem;
+    border-bottom: 2px solid #f3f4f6;
+    margin-bottom: 1rem;
+}
+
+.active-tab {
+    color: #0070d2;
+    font-weight: 700;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #0070d2;
+    cursor: pointer;
+}
+
+.inactive-tab {
+    color: #6b7280;
+    padding-bottom: 0.75rem;
+    cursor: pointer;
+}
+
+/* Table Styling */
+.custom-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.custom-table th {
+    background-color: #f9fafb;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: #6b7280;
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.custom-table td {
+    padding: 1rem;
+    vertical-align: middle;
+    color: #374151;
+}
+
+.price-blue {
+    color: #0070d2;
+    font-weight: 700;
+}
+
+/* Status Badge */
+.badge {
+    background-color: #dcfce7;
+    color: #166534;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.prop-img {
+    width: 48px;
+    height: 36px;
+    border-radius: 4px;
+    margin-right: 12px;
+    object-fit: cover;
+}
